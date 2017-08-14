@@ -27,7 +27,7 @@ const BaseInputButton = (props) => {
     const ChildEle = <Input {...defaultProps} />;
 
     const btnEle = props.option.map((v, i) => {
-        const style = {};
+        const style = { marginBottom: 8 };
         if (i < props.option.length - 1) {
             style.marginRight = '8px';
         }

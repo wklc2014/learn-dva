@@ -40,7 +40,7 @@ const formLayout = {
             xl: { span: 2 },
         },
         wrapperCol: {
-            xs: { span: 18 },
+            xs: { span: 16 },
             sm: { span: 21 },
             md: { span: 21 },
             lg: { span: 22 },

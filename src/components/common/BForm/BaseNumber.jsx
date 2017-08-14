@@ -9,6 +9,9 @@ import { Form, InputNumber } from 'antd';
 const FormItem = Form.Item;
 
 const BaseNumber = (props) => {
+
+    console.log(22)
+
     const defaultProps = {
         disabled: props.disabled,
         placeholder: props.placeholder,

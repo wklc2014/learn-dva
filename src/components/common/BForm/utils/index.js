@@ -18,6 +18,9 @@ export function getChildGridLayout(span) {
         md: span,
         lg: span,
         xl: span,
+        style: {
+            marginBottom: '8px',
+        }
     };
 
     const rightProps = {

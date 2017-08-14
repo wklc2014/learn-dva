@@ -8,6 +8,7 @@ import classnames from 'classnames';
 import { Form, Input, Button, Row, Col } from 'antd';
 
 const FormItem = Form.Item;
+const { TextArea } = Input;
 
 const BaseTextAreaButton = (props) => {
     const defaultProps = {
@@ -20,10 +21,9 @@ const BaseTextAreaButton = (props) => {
             })
         },
         rows: props.rows,
-        type: 'textarea',
     };
 
-    const ChildEle = <Input {...defaultProps} />;
+    const ChildEle = <TextArea {...defaultProps} />;
 
     const btnEle = props.option.map((v, i) => {
         const style = {};

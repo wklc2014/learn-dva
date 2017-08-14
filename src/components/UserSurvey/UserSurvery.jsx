@@ -1,7 +1,7 @@
 /**
  * 用户调查
  */
-
+import { connect } from 'dva';
 import React, { Component } from 'react';
 import { Button } from 'antd';
 
@@ -15,16 +15,24 @@ class UserSurvery extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            // e: '2017-05-12 12:20:30'
-        };
+        this.state = {};
     }
 
     onChange = ({ id, value, type, addValue }) => {
-        console.log(id, value, type, addValue);
-        this.setState({
-            [id]: value,
+        // console.log(id, value, type, addValue);
+        const newValue = { [id]: value };
+        this.props.dispatch({
+            type: 'UserSurvery/update',
+            payload: { modelKey: 'Basic', modelValue: newValue },
         })
+        // switch (id) {
+        //     case 'ab':
+        //         if (type === 'radio') {
+        //             newValue[id] = [this.state[id], value];
+        //         }
+        //         break;
+        // }
+        // this.setState(newValue);
     }
 
     onSubmit = () => {
@@ -51,7 +59,7 @@ class UserSurvery extends Component {
                         formProps={{
                             layout: 'layout_2',
                         }}
-                        values={this.state}
+                        values={this.props.values}
                     />
                 </div>
                 <p>
@@ -64,4 +72,10 @@ class UserSurvery extends Component {
     }
 }
 
-export default UserSurvery;
+function mapStateToProps(state, ownProps) {
+    return {
+        values: state.UserSurvery.Basic,
+    }
+}
+
+export default connect(mapStateToProps)(UserSurvery);

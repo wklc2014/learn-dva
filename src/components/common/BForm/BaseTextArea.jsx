@@ -7,6 +7,7 @@ import lodash from 'lodash';
 import { Form, Input } from 'antd';
 
 const FormItem = Form.Item;
+const { TextArea } = Input;
 
 const BaseTextArea = (props) => {
 
@@ -20,10 +21,9 @@ const BaseTextArea = (props) => {
             })
         },
         rows: props.rows,
-        type: 'textarea',
     };
 
-    const ChildEle = <Input {...defaultProps} />;
+    const ChildEle = <TextArea {...defaultProps} />;
 
     return (
         <FormItem
