@@ -20,6 +20,7 @@ const BaseRadioButton = (props) => {
                 value: e.target.value,
             })
         },
+        style: props.style,
     };
 
     const ChildEle = (

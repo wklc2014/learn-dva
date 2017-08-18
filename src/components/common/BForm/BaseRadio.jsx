@@ -19,6 +19,7 @@ const BaseRadio = (props) => {
                 value: e.target.value,
             })
         },
+        style: props.style,
     };
 
     const ChildEle = (

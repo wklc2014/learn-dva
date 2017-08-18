@@ -20,6 +20,7 @@ const BaseSelect = (props) => {
                 value: e,
             })
         },
+        style: props.style,
         dropdownMatchSelectWidth: props.dropdownMatchSelectWidth,
         allowClear: props.allowClear,
         mode: props.mode,

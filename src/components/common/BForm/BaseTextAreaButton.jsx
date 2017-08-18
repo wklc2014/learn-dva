@@ -20,6 +20,7 @@ const BaseTextAreaButton = (props) => {
                 value: e.target.value
             })
         },
+        style: props.style,
         rows: props.rows,
     };
 

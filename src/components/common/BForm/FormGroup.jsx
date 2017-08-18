@@ -14,7 +14,7 @@ class FormGroup extends Component {
     }
 
     render() {
-        const { configs, onChange, values, formProps, col } = this.props;
+        const { configs, onChange, values, formProps, col, className } = this.props;
         const { getFieldDecorator } = this.props.form;
 
         const formEle = Object.keys(configs).map((v, i) => {
@@ -32,7 +32,9 @@ class FormGroup extends Component {
             return <Col key={i} {...newColProps}><FormBox {...groupProps} /></Col>;
         });
 
-        return <Form><Row type="flex">{formEle}</Row></Form>;
+        return (
+            <Form className={className}><Row type="flex">{formEle}</Row></Form>
+        );
     }
 }
 
@@ -42,6 +44,7 @@ FormGroup.propTypes = {
     formProps: propTypes.object,
     onChange: propTypes.func,
     values: propTypes.object,
+    className: propTypes.string,
 };
 
 export default Form.create()(FormGroup);

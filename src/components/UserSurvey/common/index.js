@@ -1,45 +1,49 @@
 // 用户调查字段配置
 export const CONFIG_USER_SURVERY = {
-    b: {
+    lossPart: {
         order: 2,
         type: 'cascader',
         label: '受伤部位',
         area: 'quanguo',
+        placeholder: '这是一个三级联动选择',
+        rules: {
+            required: true,
+        }
     },
-    c: {
+    payMoney: {
         order: 3,
         type: 'checkbox',
         label: '赔付金额',
         option: [
             { label: '无损', value: '01' },
-            { label: '正前方', value: '02' },
+            { label: '正前方', value: '02', selected: true },
             { label: '前方左侧', value: '03' },
-            { label: '前方右侧', value: '04' },
+            { label: '前方右侧', value: '04', selected: true },
             { label: '车身左侧', value: '05' },
             { label: '车身右侧', value: '06' },
         ],
         colSpan: 2,
     },
-    d: {
+    reportDate: {
         order: 4,
         type: 'date',
         label: '报案日期',
     },
-    e: {
+    translateDate: {
         order: 5,
         type: 'date-range',
         label: '运输起止日期',
         placeholder: '运输日期',
         // colSpan: 2,
     },
-    a: {
+    userName: {
         order: 1,
         type: 'input',
         label: '用户姓名',
         extra: '最多输入500个字',
         rules: { required: true },
     },
-    aa: {
+    address: {
         order: 7,
         type: 'input-button',
         label: '地址',
@@ -48,7 +52,7 @@ export const CONFIG_USER_SURVERY = {
             { label: '同三者', value: '02' },
         ]
     },
-    ab: {
+    contactPhone: {
         order: 7,
         type: 'input-radio',
         label: '联系人电话',
@@ -57,30 +61,30 @@ export const CONFIG_USER_SURVERY = {
             { label: '同三者', value: '02' },
         ]
     },
-    f: {
+    ploicyMoney: {
         order: 6,
         type: 'number',
         label: '保单金额',
     },
-    g: {
+    sex: {
         order: 7,
         type: 'radio',
         label: '被保人性别',
         option: [
             { label: '男', value: '01' },
-            { label: '女', value: '02' },
+            { label: '女', value: '02', selected: true },
         ]
     },
-    gg: {
+    type: {
         order: 7,
         type: 'radio-button',
         label: '类别',
         option: [
-            { label: '车险', value: '01' },
+            { label: '车险', value: '01', selected: true },
             { label: '非车险', value: '02' },
         ]
     },
-    h: {
+    carMarkType: {
         order: 8,
         type: 'enum',
         label: '号牌种类',
@@ -90,13 +94,13 @@ export const CONFIG_USER_SURVERY = {
             { value: '03', label: '使馆汽车号牌' },
             { value: '04', label: '领馆汽车号牌' },
             { value: '05', label: '境外汽车号牌' },
-            { value: '06', label: '外籍汽车号牌' },
+            { value: '06', label: '外籍汽车号牌', selected: true },
             { value: '07', label: '两、三轮摩托车号牌' },
             { value: '08', label: '轻便摩托车号牌' },
             { value: '09', label: '使馆摩托车号牌' },
         ]
     },
-    hh: {
+    contactNo: {
         order: 8,
         type: 'enum-input',
         label: '号牌种类',
@@ -107,14 +111,14 @@ export const CONFIG_USER_SURVERY = {
         ],
         selectWidth: 60,
     },
-    i: {
+    accidentDescription: {
         order: 9,
         type: 'textarea',
         label: '出险描述',
         colSpan: 2,
         rules: { required: true }
     },
-    ii: {
+    accidentCreate: {
         order: 9,
         type: 'textarea-button',
         label: '出险描述',

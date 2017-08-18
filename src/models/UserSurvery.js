@@ -18,8 +18,8 @@ export default {
   reducers: {
     update(state, action) {
         const { modelKey, modelValue } = action.payload;
-        return Object.assign({}, state[modelKey], {
-            [modelKey]: modelValue,
+        return Object.assign({}, state, {
+            [modelKey]: Object.assign({}, state[modelKey], modelValue),
         })
     },
   },

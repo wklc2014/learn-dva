@@ -6,12 +6,11 @@ import './index.html';
 import '../assets/common.less';
 
 // 1. Initialize
-const app = dva();
+const app = dva({
+    // onAction: createLogger(),
+});
 
 // 2. Plugins
-app.use({
-    onAction: createLogger(),
-});
 app.use(createLoading());
 
 // 3. Model

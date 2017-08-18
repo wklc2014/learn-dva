@@ -10,8 +10,6 @@ const FormItem = Form.Item;
 
 const BaseNumber = (props) => {
 
-    console.log(22)
-
     const defaultProps = {
         disabled: props.disabled,
         placeholder: props.placeholder,
@@ -21,7 +19,7 @@ const BaseNumber = (props) => {
                 value: e
             })
         },
-        style: { width: '100%' },
+        style: props.style,
         min: props.min,
         max: props.max,
         step: props.step,

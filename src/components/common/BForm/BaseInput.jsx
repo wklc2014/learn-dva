@@ -20,9 +20,20 @@ const BaseInput = (props) => {
                 value: e.target.value,
             });
         },
+        style: props.style,
     };
 
-    const ChildEle = <Input {...defaultProps} />;
+    let ChildEle = null;
+    switch (props.inputType) {
+        case 'button':
+
+            break;
+        case 'radio':
+
+            break;
+        default:
+            ChildEle = <Input {...defaultProps} />;
+    }
 
     return (
         <FormItem
@@ -35,9 +46,24 @@ const BaseInput = (props) => {
                 rules: props.rules,
                 initialValue: props.value,
             })(ChildEle)}
+
         </FormItem>
     );
 }
+
+BaseInput.propTypes = {
+    className: propTypes.string,
+    disabled: propTypes.bool,
+    extra: propTypes.string,
+    getFieldDecorator: propTypes.func.isRequired,
+    id: propTypes.string.isRequired,
+    label: propTypes.string,
+    layout: propTypes.object,
+    onChange: propTypes.func.isRequired,
+    placeholder: propTypes.string,
+    rules: propTypes.array,
+    style: propTypes.object,
+};
 
 export default BaseInput;
 

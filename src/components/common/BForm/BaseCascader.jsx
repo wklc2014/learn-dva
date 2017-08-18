@@ -11,8 +11,6 @@ const FormItem = Form.Item;
 
 const BaseCascader = (props) => {
 
-
-
     const defaultProps = {
         disabled: props.disabled,
         placeholder: props.placeholder,
@@ -22,9 +20,9 @@ const BaseCascader = (props) => {
                 value: e
             })
         },
-        style: { width: '100%' },
-        allowClear: props.allowClear,
         options: props.option,
+        style: props.style,
+        allowClear: props.allowClear,
     };
 
     const ChildEle = <Cascader {...defaultProps} />;
@@ -44,7 +42,18 @@ const BaseCascader = (props) => {
 }
 
 BaseCascader.propTypes = {
+    allowClear: propTypes.bool,
+    className: propTypes.string,
+    disabled: propTypes.bool,
+    getFieldDecorator: propTypes.func.isRequired,
+    id: propTypes.string.isRequired,
+    label: propTypes.string,
+    layout: propTypes.object,
+    onChange: propTypes.func.isRequired,
     option: propTypes.array.isRequired,
+    placeholder: propTypes.string,
+    rules: propTypes.array,
+    style: propTypes.object,
 };
 
 export default BaseCascader;

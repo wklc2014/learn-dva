@@ -11,7 +11,6 @@ import formLayout from './formLayout/';
 import BaseCascader from './BaseCascader.jsx';
 import BaseCheckbox from './BaseCheckbox.jsx';
 import BaseDatePicker from './BaseDatePicker.jsx';
-import BaseDateRange from './BaseDateRange.jsx';
 import BaseInput from './BaseInput.jsx';
 import BaseInputButton from './BaseInputButton.jsx';
 import BaseInputRadio from './BaseInputRadio.jsx';
@@ -62,9 +61,32 @@ class FormBox extends Component {
     }
 
     getNewValue = () => {
-        const { type, value } = this.props;
+        const { type, value, option, render, isDate, format, join } = this.props;
         let newValues = value;
         switch (type) {
+            case 'checkbox':
+                if (!value && option) {
+                    const o = [];
+                    option.forEach((v) => {
+                        if (v.selected) {
+                            o.push(v.value);
+                        }
+                    })
+                    newValues = o;
+                }
+                break;
+            case 'radio':
+            case 'radio-button':
+            case 'enum':
+                if (!value && option) {
+                    option.some((v) => {
+                        if (v.selected) {
+                            newValues = v.value;
+                        }
+                        return v.selected;
+                    })
+                }
+                break;
             case 'date':
                 newValues = value ? moment(value) : undefined;
                 break;
@@ -75,7 +97,7 @@ class FormBox extends Component {
                     newValues = [moment(value)];
                 } else {
                     newValues = [];
-                    console.log('Type is date-range, The value should is array or string!');
+                    // console.log('Type is date-range, The value should is array or string!');
                 }
                 break;
             case 'input-radio':
@@ -108,6 +130,26 @@ class FormBox extends Component {
                     }
                 }
                 newValues = { inputValue: SelectInputInputValue, selectValue: SelectInputSelectValue };
+                break;
+            case 'text':
+                if (render) {
+                    // 配置render函数
+                    newValues = render(value);
+                } else if (isDate) {
+                    // 日期
+                    newValues = moment(value).format(format);
+                }  else if (lodash.isArray(value)) {
+                    // 数组
+                    newValues = value.join(join);
+                } else if (option){
+                    // 枚举值映射
+                    option.some((v) => {
+                        if (v.value === value) {
+                            newValues = v.label;
+                        }
+                        return v.value === props.value;
+                    })
+                }
                 break;
         }
         return newValues;
@@ -163,6 +205,24 @@ class FormBox extends Component {
         return newOption;
     }
 
+    getNewStyle = () => {
+        const { type, toUpper } = this.props;
+        const newStyle = {};
+        if (toUpper) {
+            Object.assign(newStyle, { textTransform: 'uppercase' });
+        }
+        switch (type) {
+            case 'cascader':
+            case 'date':
+            case 'date-range':
+            case 'number':
+            case 'enum':
+                Object.assign(newStyle, { width: '100%' });
+                break;
+        }
+        return newStyle;
+    }
+
     render() {
         const newPlaceholder = this.getNewPlaceholder();
         const newRules = this.getNewRules();
@@ -170,6 +230,7 @@ class FormBox extends Component {
         const newValue = this.getNewValue();
         const newClassName = this.getNewClassName();
         const newOption = this.getNewOption();
+        const newStyle = this.getNewStyle();
         const newChildSpan = getChildGridLayout(this.props.childSpan);
 
         const commonProps = {
@@ -200,25 +261,78 @@ class FormBox extends Component {
             showSearch                  : this.props.showSearch,
             selectWidth                  : this.props.selectWidth,
             step                        : this.props.step,
+            style                       : newStyle,
             value                       : newValue,
         };
 
         let ChildEle = null;
         switch (this.props.type) {
             case 'cascader':
-                ChildEle = <BaseCascader {...commonProps} />;
+                const cascaderProps = {
+                    allowClear: this.props.allowClear,
+                    className: newClassName,
+                    disabled: this.props.disabled,
+                    getFieldDecorator: this.props.getFieldDecorator,
+                    id: this.props.id,
+                    label: this.props.label,
+                    layout: newLayout,
+                    onChange: this.props.onChange,
+                    option: newOption,
+                    placeholder: newPlaceholder,
+                    rules: newRules,
+                    style: newStyle,
+                }
+                ChildEle = <BaseCascader {...cascaderProps} />;
                 break;
             case 'checkbox':
-                ChildEle = <BaseCheckbox {...commonProps} />;
+                const checkboxProps = {
+                    className: newClassName,
+                    disabled: this.props.disabled,
+                    getFieldDecorator: this.props.getFieldDecorator,
+                    id: this.props.id,
+                    label: this.props.label,
+                    layout: newLayout,
+                    onChange: this.props.onChange,
+                    option: newOption,
+                    rules: newRules,
+                    style: newStyle,
+                }
+                ChildEle = <BaseCheckbox {...checkboxProps} />;
                 break;
             case 'date':
-                ChildEle = <BaseDatePicker {...commonProps} />;
-                break;
-            case 'date-range':
-                ChildEle = <BaseDateRange {...commonProps} />;
+                const dateProps = {
+                    className: newClassName,
+                    dateType: this.props.dateType,
+                    disabled: this.props.disabled,
+                    format: this.props.format,
+                    getFieldDecorator: this.props.getFieldDecorator,
+                    id: this.props.id,
+                    label: this.props.label,
+                    layout: newLayout,
+                    onChange: this.props.onChange,
+                    placeholder: newPlaceholder,
+                    rules: newRules,
+                    style: newStyle,
+                    showTime: this.props.showTime,
+                }
+                ChildEle = <BaseDatePicker {...dateProps} />;
                 break;
             case 'input':
-                ChildEle = <BaseInput {...commonProps} />;
+                const inputProps = {
+                    className: newClassName,
+                    disabled: this.props.disabled,
+                    extra: this.props.extra,
+                    getFieldDecorator: this.props.getFieldDecorator,
+                    id: this.props.id,
+                    inputType: this.props.inputType,
+                    label: this.props.label,
+                    layout: newLayout,
+                    onChange: this.props.onChange,
+                    placeholder: newPlaceholder,
+                    rules: newRules,
+                    style: newStyle,
+                }
+                ChildEle = <BaseInput {...inputProps} />;
                 break;
             case 'input-button':
                 ChildEle = <BaseInputButton {...commonProps} />;

@@ -42,7 +42,7 @@ class BaseSearch extends Component {
         const defaultProps = {
             disabled: this.props.disabled,
             placeholder: this.props.placeholder,
-            style: { width: '100%' },
+            style: props.style,
             onSelect: (e) => {
                 this.props.onChange({
                     id: this.props.id,

@@ -22,6 +22,7 @@ const BaseInputButton = (props) => {
                 value: e.target.value
             })
         },
+        style: props.style,
     };
 
     const ChildEle = <Input {...defaultProps} />;
