@@ -6,10 +6,10 @@ export const CONFIG_SIDEBAR = {
         text: '导航一',
         isSider: true,
     },
-    query: {
+    test: {
         icon: 'upload',
-        path: '/query',
-        text: '导航二',
+        path: '/test',
+        text: '测试',
         isSider: true,
     }
 }
