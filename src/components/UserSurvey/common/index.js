@@ -31,10 +31,10 @@ export const CONFIG_USER_SURVERY = {
     },
     translateDate: {
         order: 5,
-        type: 'date-range',
+        type: 'date',
+        addType: 'range',
         label: '运输起止日期',
         placeholder: '运输日期',
-        // colSpan: 2,
     },
     userName: {
         order: 1,
@@ -45,8 +45,10 @@ export const CONFIG_USER_SURVERY = {
     },
     address: {
         order: 7,
-        type: 'input-button',
+        type: 'input',
+        addType: 'button',
         label: '地址',
+        childSpan: 10,
         option: [
             { label: '同标的', value: '01' },
             { label: '同三者', value: '02' },
@@ -54,7 +56,8 @@ export const CONFIG_USER_SURVERY = {
     },
     contactPhone: {
         order: 7,
-        type: 'input-radio',
+        type: 'input',
+        addType: 'radio',
         label: '联系人电话',
         option: [
             { label: '同标的', value: '01' },
@@ -77,7 +80,8 @@ export const CONFIG_USER_SURVERY = {
     },
     type: {
         order: 7,
-        type: 'radio-button',
+        type: 'radio',
+        addType: 'button',
         label: '类别',
         option: [
             { label: '车险', value: '01', selected: true },
@@ -102,7 +106,8 @@ export const CONFIG_USER_SURVERY = {
     },
     contactNo: {
         order: 8,
-        type: 'enum-input',
+        type: 'inputAdd',
+        addType: 'before-select',
         label: '号牌种类',
         option: [
             { value: '01', label: '+86' },
@@ -120,7 +125,8 @@ export const CONFIG_USER_SURVERY = {
     },
     accidentCreate: {
         order: 9,
-        type: 'textarea-button',
+        type: 'textarea',
+        addType: 'button',
         label: '出险描述',
         colSpan: 3,
         option: [

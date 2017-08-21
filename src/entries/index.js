@@ -7,7 +7,9 @@ import '../assets/common.less';
 
 // 1. Initialize
 const app = dva({
-    // onAction: createLogger(),
+    onAction: createLogger({
+        collapsed: true,
+    }),
 });
 
 // 2. Plugins

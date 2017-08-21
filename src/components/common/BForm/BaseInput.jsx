@@ -4,15 +4,18 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import lodash from 'lodash';
-import { Form, Input } from 'antd';
+import { Form, Input, Row, Col, Radio, Button } from 'antd';
 
 const FormItem = Form.Item;
+const RadioGroup = Radio.Group;
 
 const BaseInput = (props) => {
 
+    const { disabled, placeholder } = props;
+
     const defaultProps = {
-        disabled: props.disabled,
-        placeholder: props.placeholder,
+        disabled,
+        placeholder,
         size: 'large',
         onChange: (e) => {
             props.onChange({
@@ -24,15 +27,113 @@ const BaseInput = (props) => {
     };
 
     let ChildEle = null;
-    switch (props.inputType) {
-        case 'button':
 
+    const gutter = props.childGutter;
+    const childSpanLeft = lodash.get(props, 'childSpan.left');
+    const childSpanRight = lodash.get(props, 'childSpan.right');
+    const inputEle = <Input {...defaultProps} />;
+
+    switch (props.addType) {
+        case 'button':
+            const btnEle = props.option.map((v, i) => {
+                const style = { marginBottom: 8 };
+                if (i < props.option.length - 1) {
+                    style.marginRight = '8px';
+                }
+
+                const btnProps = {
+                    key: i,
+                    type: v.type,
+                    size: 'large',
+                    style,
+                    disabled,
+                };
+
+                if (v.value === 'city') {
+                    return (
+                        <Cascader
+                            key={i}
+                            options={v.citys}
+                            onChange={(value) => {
+                                props.onChange({
+                                    id: props.id,
+                                    value: v.value,
+                                    type: 'button',
+                                    addValue: value
+                                });
+                            }}
+                        >
+                            <Button {...btnProps}>{v.label}</Button>
+                        </Cascader>
+                    );
+                }
+
+                return (
+                    <Button
+                        {...btnProps}
+                        onClick={(e) => {
+                            props.onChange({
+                                id: props.id,
+                                value: v.value,
+                                type: 'button'
+                            });
+                        }}
+                    >
+                        {v.label}
+                    </Button>
+                )
+            });
+            ChildEle = (
+                <Row type="flex" gutter={gutter}>
+                    <Col {...childSpanLeft}>
+                        {props.getFieldDecorator(props.id, {
+                            rules: props.rules,
+                            initialValue: props.value,
+                        })(inputEle)}
+                    </Col>
+                    <Col {...childSpanRight}>
+                        {btnEle}
+                    </Col>
+                </Row>
+            );
             break;
         case 'radio':
-
+            const radioValue = lodash.get(props, 'value.radioValue');
+            const inputValue = lodash.get(props, 'value.inputValue');
+            const radioEle = (
+                <RadioGroup
+                    disabled={disabled}
+                    value={radioValue}
+                    onChange={e => {
+                        props.onChange({
+                            id: props.id,
+                            value: e.target.value,
+                            type: 'radio'
+                        });
+                    }}
+                >
+                    {props.option.map((v, i) => <Radio key={i} value={v.value}>{v.label}</Radio>)}
+                </RadioGroup>
+            );
+            ChildEle = (
+                <Row type="flex" gutter={gutter}>
+                    <Col {...childSpanLeft}>
+                        {props.getFieldDecorator(props.id, {
+                            rules: props.rules,
+                            initialValue: inputValue,
+                        })(inputEle)}
+                    </Col>
+                    <Col {...childSpanRight}>
+                        {radioEle}
+                    </Col>
+                </Row>
+            );
             break;
         default:
-            ChildEle = <Input {...defaultProps} />;
+            ChildEle = props.getFieldDecorator(props.id, {
+                rules: props.rules,
+                initialValue: props.value,
+            })(inputEle);
     }
 
     return (
@@ -42,16 +143,13 @@ const BaseInput = (props) => {
             className={props.className}
             extra={props.extra}
         >
-            {props.getFieldDecorator(props.id, {
-                rules: props.rules,
-                initialValue: props.value,
-            })(ChildEle)}
-
+            {ChildEle}
         </FormItem>
     );
 }
 
 BaseInput.propTypes = {
+    addType: propTypes.string,
     className: propTypes.string,
     disabled: propTypes.bool,
     extra: propTypes.string,
@@ -60,6 +158,7 @@ BaseInput.propTypes = {
     label: propTypes.string,
     layout: propTypes.object,
     onChange: propTypes.func.isRequired,
+    option: propTypes.array,
     placeholder: propTypes.string,
     rules: propTypes.array,
     style: propTypes.object,

@@ -21,20 +21,25 @@ const BaseDatePicker = (props) => {
     };
 
     let ChildEle = null;
-    switch (props.dateType) {
+    switch (props.addType) {
         case 'range':
             ChildEle = (
                 <RangePicker
                     {...defaultProps}
                     onChange={(e) => {
-                        let value = undefined;
-                        if (e) {
-                            value = [moment(e[0]).format(props.format), moment(e[1]).format(props.format)]
+                        let value;
+                        if (e.length) {
+                            value = [
+                                moment(e[0]).format(props.format),
+                                moment(e[1]).format(props.format)
+                            ];
+                        } else {
+                            value = [];
                         }
                         props.onChange({
                             id: props.id,
                             value
-                        })
+                        });
                     }}
                 />
             );
@@ -69,8 +74,8 @@ const BaseDatePicker = (props) => {
 }
 
 BaseDatePicker.propTypes = {
+    addType: propTypes.string,
     className: propTypes.string,
-    dateType: propTypes.string,
     disabled: propTypes.bool,
     format: propTypes.string,
     getFieldDecorator: propTypes.func.isRequired,
@@ -78,7 +83,10 @@ BaseDatePicker.propTypes = {
     label: propTypes.string,
     layout: propTypes.object,
     onChange: propTypes.func.isRequired,
-    placeholder: propTypes.string,
+    placeholder: propTypes.oneOfType([
+        propTypes.string,
+        propTypes.array,
+    ]),
     rules: propTypes.array,
     style: propTypes.object,
     showTime: propTypes.bool,

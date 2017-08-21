@@ -21,24 +21,33 @@ class SurveryContent extends Component {
     onChange = ({ id, value, type, addValue }) => {
         // console.log(id, value, type, addValue);
         const newValue = { [id]: value };
+        switch (id) {
+            case 'contactPhone':
+                if (type === 'radio') {
+                    const t = { '01': '标的:13591993996', '02': '三者:18111224835' };
+                    newValue[id] = { inputValue: t[value], radioValue: value };
+                    this.refs.formGroup_1.setFieldsValue({ [id]: t[value] });
+                }
+                break;
+            case 'address':
+                if (type === 'button') {
+                    const t = { '01': '标的:13591993996', '02': '三者:18111224835' };
+                    newValue[id] = [t[value], value];
+                    this.refs.formGroup_1.setFieldsValue({ [id]: t[value] });
+                }
+                break;
+        }
         this.props.dispatch({
             type: 'UserSurvery/update',
             payload: { modelKey: 'Basic', modelValue: newValue },
         })
-        // switch (id) {
-        //     case 'ab':
-        //         if (type === 'radio') {
-        //             newValue[id] = [this.state[id], value];
-        //         }
-        //         break;
-        // }
-
     }
 
     onSubmit = () => {
         // this.props.onSubmit();
         this.refs.formGroup_1.validateFields((errors, values) => {
-            console.log(errors, values)
+            console.log('errors>>>', errors)
+            console.log('values>>>', values)
         })
     }
 

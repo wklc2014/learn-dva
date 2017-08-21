@@ -52,5 +52,23 @@ BaseSelect.propTypes = {
     option: propTypes.array.isRequired,
 };
 
+BaseSelect.propTypes = {
+    allowClear: propTypes.bool,
+    className: propTypes.string,
+    disabled: propTypes.bool,
+    dropdownMatchSelectWidth: propTypes.bool,
+    extra: propTypes.string,
+    getFieldDecorator: propTypes.func.isRequired,
+    id: propTypes.string.isRequired,
+    label: propTypes.string,
+    layout: propTypes.object,
+    mode: propTypes.string,
+    onChange: propTypes.func.isRequired,
+    option: propTypes.array,
+    placeholder: propTypes.string,
+    rules: propTypes.array,
+    style: propTypes.object,
+};
+
 export default BaseSelect;
 
