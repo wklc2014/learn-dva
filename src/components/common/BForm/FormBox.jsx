@@ -46,12 +46,12 @@ class FormBox extends Component {
     getNewClassName = () => {
         const { layout, className } = this.props;
 
-        const newClass = classnames({
+        const newClassName = classnames({
             'label-vertical': layout === 'vertical',
             [className]: !!className,
         });
 
-        return newClass;
+        return newClassName;
     }
 
     getNewValue = () => {
@@ -148,12 +148,14 @@ class FormBox extends Component {
     getNewPlaceholder = () => {
         const { placeholder, label, id, type } = this.props;
         const str = placeholder || `请输入${label || id}`;
-        let newPlaceholder = str;
+        let newPlaceholder;
         switch (type) {
             case 'date':
                 if (this.props.addType === 'range') {
                     const DateRangeStr = placeholder || label || id;
                     newPlaceholder = [`开始${DateRangeStr}`, `结束${DateRangeStr}`];
+                } else {
+                    newPlaceholder = str;
                 }
                 break;
             default:
@@ -184,31 +186,33 @@ class FormBox extends Component {
     }
 
     getNewOption = () => {
-        const { area, option, type } = this.props;
-        const newOption = option || [];
-        if (area && type === 'cascader') {
-            const T = {
-                quanguo: CHINESE_CITYS,
-                shanghai: CHINESE_SHANGHAI,
-                beijing: CHINESE_BEIJING,
-            };
-            return T[area] || newOption;
+        const { option, type } = this.props;
+        let newOption = option || [];
+        switch (this.props.type) {
+            case 'cascader':
+                const T = {
+                    quanguo: CHINESE_CITYS,
+                    shanghai: CHINESE_SHANGHAI,
+                    beijing: CHINESE_BEIJING,
+                };
+                if (this.props.area && T[this.props.area]) {
+                    newOption = [...T[this.props.area]];
+                }
         }
         return newOption;
     }
 
     getNewStyle = () => {
-        const { type, toUpper } = this.props;
         const newStyle = {};
-        if (toUpper) {
+        if (this.props.toUpper) {
             Object.assign(newStyle, { textTransform: 'uppercase' });
         }
-        switch (type) {
+        switch (this.props.type) {
             case 'cascader':
             case 'date':
-            case 'date-range':
             case 'number':
             case 'enum':
+            case 'inputAdd':
                 Object.assign(newStyle, { width: '100%' });
                 break;
         }

@@ -121,7 +121,8 @@ export const CONFIG_USER_SURVERY = {
         type: 'textarea',
         label: '出险描述',
         colSpan: 2,
-        rules: { required: true }
+        rules: { required: true },
+        extra: '最多输入500个字',
     },
     accidentCreate: {
         order: 9,
@@ -133,5 +134,6 @@ export const CONFIG_USER_SURVERY = {
             { value: '01', label: '生成描述', type: 'primary' },
         ],
         childSpan: 18,
+        extra: '最多输入500个字',
     }
 };

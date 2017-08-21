@@ -15,6 +15,7 @@ const BaseInputAdd = (props) => {
     const defaultProps = {
         ...commonProps,
         placeholder: props.placeholder,
+        style: props.style,
     };
 
     const inputValue = lodash.get(props, 'value.inputValue', undefined);
