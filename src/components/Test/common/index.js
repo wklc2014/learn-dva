@@ -70,7 +70,7 @@ export const DATA_SOURCE = [
 { key: 'system－4', type: '688系统倍率', key_1: 6, key_2: 8, key_3: 8, key_4: 12, key_5: 12, key_6: 8, key_7: 8, key_8: 6},
 { key: 'system－5', type: '668系统倍率', key_1: 6, key_2: 6, key_3: 8, key_4: 12, key_5: 12, key_6: 8, key_7: 8, key_8: 6},
 
-// { key: 'type-1', type: '312正常买法', key_1: 5, key_2: 2, key_3: 1, key_4: 1, key_5: 1, key_6: 1, key_7: 2, key_8: 5,},
+{ key: 'type-1', type: '312正常买法', key_1: 5, key_2: 2, key_3: 1, key_4: 1, key_5: 1, key_6: 1, key_7: 2, key_8: 5,},
 // { key: 'type-2', type: '48正常买法', key_1: 5, key_2: 3, key_3: 2, key_4: 1, key_5: 1, key_6: 2, key_7: 3, key_8: 5,},
 
 { key: 'self-1', type: '二号买法', key_1: 1, key_2: 1, key_3: 1, key_4: 1, key_5: 1, key_6: 1, key_7: 1, key_8: 1 },

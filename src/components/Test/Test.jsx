@@ -3,7 +3,8 @@ import { Table, Button, Input, InputNumber } from 'antd';
 import lodash from 'lodash';
 import { DATA_SOURCE, KEYS, COLUMNS, STATE_ADD } from './common/';
 
-const rate = 10 * 0.01;
+const rate = 10 * 1;
+// const rate = 10 * 0.01;
 
 class Assess extends Component {
 
