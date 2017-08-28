@@ -125,7 +125,7 @@ class FormBox extends Component {
                 if (this.props.render) {
                     // 配置render函数
                     newValues = this.props.render(value);
-                } else if (isDate) {
+                } else if (this.props.isDate) {
                     // 日期
                     newValues = moment(value).format(this.props.format);
                 }  else if (lodash.isArray(value)) {
