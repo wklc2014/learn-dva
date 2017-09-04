@@ -107,10 +107,6 @@ export const CONFIT_TABLE_HEAD = [{
     title: '优惠后保费',
     dataIndex: 'real_prem',
     key: 'real_prem',
+    total: true,
 },
-// {
-//     title: '保费合计',
-//     dataIndex: 'prem_total',
-//     key: 'prem_total',
-// }
 ];

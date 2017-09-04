@@ -10,7 +10,6 @@ class SummaryTable extends Component {
 
     getDataSource = () => {
         const newDataSource = [...this.props.tableData];
-        const hasTs = lodash.find(newDataSource, (o) => o.key === 'ts');
         const totalData = { serial_no: '汇总: ' };
         this.props.tableHead.forEach((v) => {
             if (v.total) {
@@ -20,13 +19,19 @@ class SummaryTable extends Component {
         this.props.tableData.forEach((v) => {
             Object.keys(totalData).forEach((m) => {
                 if (m !== 'serial_no') {
-                    totalData[m] += lodash.round(v[m], 2);
+                    totalData[m] += parseFloat(v[m]);
                 }
             })
         });
-        if (!hasTs) {
-            newDataSource.push({ key: 'ts', ...totalData });
-        }
+        const newTotalData = {};
+        Object.keys(totalData).forEach((v) => {
+            if (v !== 'serial_no') {
+                newTotalData[v] = parseFloat(totalData[v]).toFixed(2);
+            } else {
+                newTotalData[v] = totalData[v];
+            }
+        })
+        newDataSource.push({ key: 'ts', ...newTotalData });
         return newDataSource;
     }
 

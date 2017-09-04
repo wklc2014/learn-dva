@@ -65,7 +65,17 @@ class Policy extends Component {
                     console.log('text>>>', record.key)
                     switch (record.key) {
                         case 'ts':
+                            if (val.total) {
 
+                            } else {
+                                let totalValue = 0;
+                                lastDataSource.map(s => {
+                                    if(s.key != 'ts') {
+                                        totalValue = util.addition(totalValue, lodash.toNumber(s[v] || 0));
+                                    }
+                                })
+                                return lodash.round(totalValue, 2);
+                            }
                             if (i === 0) {
                                 return <div style={{ textAlign: 'center' }}>汇总</div>;
                             }
