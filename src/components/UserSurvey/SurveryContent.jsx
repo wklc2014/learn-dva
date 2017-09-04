@@ -35,6 +35,11 @@ class SurveryContent extends Component {
                     newValue[id] = [t[value], value];
                     this.refs.formGroup_1.setFieldsValue({ [id]: t[value] });
                 }
+            case 'accidentCreate':
+                if (type === 'button' && value === '01') {
+                    newValue[id] = '自动生成描述巴拉巴拉小魔仙';
+                    this.refs.formGroup_1.setFieldsValue({ [id]: '自动生成描述巴拉巴拉小魔仙' });
+                }
                 break;
         }
         this.props.dispatch({

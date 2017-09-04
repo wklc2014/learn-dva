@@ -17,7 +17,15 @@ class FormGroup extends Component {
         const { configs, onChange, values, formProps, col, className } = this.props;
         const { getFieldDecorator } = this.props.form;
 
-        const formEle = Object.keys(configs).map((v, i) => {
+        const formEle = Object.keys(configs).sort((m, n) => {
+            if (configs[m].order > configs[n].order) {
+                return 1;
+            } else if (configs[m].order < configs[n].order) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }).map((v, i) => {
             const val = configs[v];
             const groupProps = {
                 ...val,

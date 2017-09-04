@@ -11,6 +11,12 @@ export const CONFIG_SIDEBAR = {
         path: '/test',
         text: '测试',
         isSider: true,
+    },
+    policy: {
+        icon: 'hdd',
+        path: '/policy',
+        text: '保单',
+        isSider: true,
     }
 }
 

@@ -76,6 +76,8 @@ export const CONFIG_USER_SURVERY = {
         option: [
             { label: '男', value: '01' },
             { label: '女', value: '02', selected: true },
+            { label: '男女', value: '03' },
+            { label: '女男', value: '04' },
         ]
     },
     type: {
