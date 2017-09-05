@@ -3,7 +3,10 @@ export default {
     namespace: 'UserSurvery',
 
     state: {
-        Basic: {},
+        Basic: {
+            userName: 'ABCDEFG',
+            carNumber: 'hijklmn',
+        },
     },
 
     subscriptions: {

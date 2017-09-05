@@ -49,12 +49,19 @@ class FormBox extends Component {
         return next !== prev;
     }
 
-    onChange = ({ id, value, type, addValue }) => {
-        let newValue = value;
-        if (this.props.toUpper && typeof value === 'string') {
-            newValue = value.toUpperCase();
+    textTransform = (value) => {
+        value = value;
+        if (this.props.toUpperCase && typeof value === 'string') {
+            value = value.toUpperCase();
+        } else if (this.props.toLowerCase && typeof value === 'string') {
+            value = value.toLowerCase();
         }
-        this.props.onChange({ id, value: newValue, type, addValue });
+        return value;
+    }
+
+    onChange = ({ id, value, type, addValue }) => {
+        value = this.textTransform(value);
+        this.props.onChange({ id, value, type, addValue });
     }
 
     getNewClassName = () => {
@@ -70,7 +77,7 @@ class FormBox extends Component {
 
     getNewValue = () => {
         const { value, option } = this.props;
-        let newValues = value;
+        let newValues = this.textTransform(value);
         switch (this.props.type) {
             case 'checkbox':
                 if (!value && option) {
@@ -218,8 +225,10 @@ class FormBox extends Component {
 
     getNewStyle = () => {
         const newStyle = {};
-        if (this.props.toUpper) {
+        if (this.props.toUpperCase) {
             Object.assign(newStyle, { textTransform: 'uppercase' });
+        } else if (this.props.toLowerCase) {
+            Object.assign(newStyle, { textTransform: 'lowercase' });
         }
         switch (this.props.type) {
             case 'cascader':
@@ -315,7 +324,8 @@ class FormBox extends Component {
                     placeholder: newPlaceholder,
                     rules: newRules,
                     style: newStyle,
-                    toUpper: this.props.toUpper,
+                    toUpperCase: this.props.toUpperCase,
+                    toLowerCase: this.props.toLowerCase,
                     value: newValue,
                 }
                 ChildEle = <BaseInput {...inputProps} />;

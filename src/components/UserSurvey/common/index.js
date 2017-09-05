@@ -42,6 +42,7 @@ export const CONFIG_USER_SURVERY = {
         label: '用户姓名',
         extra: '最多输入500个字',
         rules: { required: true },
+        toLowerCase: true,
     },
     address: {
         order: 7,
@@ -68,7 +69,7 @@ export const CONFIG_USER_SURVERY = {
         order: 6,
         type: 'input',
         label: '车牌号码',
-        toUpper: true,
+        toUpperCase: true,
     },
     ploicyMoney: {
         order: 6,

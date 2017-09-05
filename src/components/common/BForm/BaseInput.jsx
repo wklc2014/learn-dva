@@ -161,6 +161,8 @@ BaseInput.propTypes = {
     placeholder: propTypes.string,
     rules: propTypes.array,
     style: propTypes.object,
+    toUpperCase: propTypes.bool,
+    toLowerCase: propTypes.bool,
 };
 
 export default BaseInput;
