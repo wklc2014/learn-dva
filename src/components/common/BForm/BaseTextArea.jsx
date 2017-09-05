@@ -29,8 +29,8 @@ const BaseTextArea = (props) => {
     };
 
     const gutter = props.childGutter;
-    const childSpanLeft = lodash.get(props, 'childSpan.left');
-    const childSpanRight = lodash.get(props, 'childSpan.right');
+    const childSpanLeft = lodash.get(props, 'childSpan.left', {});
+    const childSpanRight = lodash.get(props, 'childSpan.right', {});
     const inputEle = <TextArea {...defaultProps} />;
     let ChildEle = null
     switch (props.addType) {

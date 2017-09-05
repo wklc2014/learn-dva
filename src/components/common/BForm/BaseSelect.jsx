@@ -49,10 +49,6 @@ const BaseSelect = (props) => {
 }
 
 BaseSelect.propTypes = {
-    option: propTypes.array.isRequired,
-};
-
-BaseSelect.propTypes = {
     allowClear: propTypes.bool,
     className: propTypes.string,
     disabled: propTypes.bool,

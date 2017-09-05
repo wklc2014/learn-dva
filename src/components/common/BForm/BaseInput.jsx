@@ -10,7 +10,6 @@ const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
 const BaseInput = (props) => {
-
     const { disabled, placeholder } = props;
 
     const defaultProps = {
@@ -29,8 +28,8 @@ const BaseInput = (props) => {
     let ChildEle = null;
 
     const gutter = props.childGutter;
-    const childSpanLeft = lodash.get(props, 'childSpan.left');
-    const childSpanRight = lodash.get(props, 'childSpan.right');
+    const childSpanLeft = lodash.get(props, 'childSpan.left', {});
+    const childSpanRight = lodash.get(props, 'childSpan.right', {});
     const inputEle = <Input {...defaultProps} />;
 
     switch (props.addType) {
@@ -59,7 +58,7 @@ const BaseInput = (props) => {
                                     id: props.id,
                                     value: v.value,
                                     type: 'button',
-                                    addValue: value
+                                    addValue: value,
                                 });
                             }}
                         >
@@ -98,17 +97,17 @@ const BaseInput = (props) => {
             );
             break;
         case 'radio':
-            const radioValue = lodash.get(props, 'value.radioValue');
-            const inputValue = lodash.get(props, 'value.inputValue');
+            const radioValue = lodash.get(props, 'value.radioValue', undefined);
+            const inputValue = lodash.get(props, 'value.inputValue', undefined);
             const radioEle = (
                 <RadioGroup
                     disabled={disabled}
                     value={radioValue}
-                    onChange={e => {
+                    onChange={(e) => {
                         props.onChange({
                             id: props.id,
                             value: e.target.value,
-                            type: 'radio'
+                            type: 'radio',
                         });
                     }}
                 >

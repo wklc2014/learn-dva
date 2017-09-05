@@ -27,18 +27,16 @@ const BaseDatePicker = (props) => {
                 <RangePicker
                     {...defaultProps}
                     onChange={(e) => {
-                        let value;
+                        let value = [];
                         if (e.length) {
                             value = [
                                 moment(e[0]).format(props.format),
                                 moment(e[1]).format(props.format)
                             ];
-                        } else {
-                            value = [];
                         }
                         props.onChange({
                             id: props.id,
-                            value
+                            value,
                         });
                     }}
                 />
@@ -52,7 +50,7 @@ const BaseDatePicker = (props) => {
                         const value = e ? moment(e).format(props.format) : undefined;
                         props.onChange({
                             id: props.id,
-                            value
+                            value,
                         });
                     }}
                 />

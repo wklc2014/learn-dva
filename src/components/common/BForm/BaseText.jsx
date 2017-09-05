@@ -29,5 +29,13 @@ const BaseText = (props) => {
     );
 }
 
+BaseText.propTypes = {
+    className: propTypes.string,
+    label: propTypes.string,
+    layout: propTypes.object,
+    style: propTypes.object,
+};
+
+
 export default BaseText;
 

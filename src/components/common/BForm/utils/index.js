@@ -11,7 +11,9 @@ export function getGridLayout(col, colSpan) {
     return newColProps;
 }
 
-export function getChildGridLayout(span) {
+export function getChildGridLayout(childSpan) {
+    const span = childSpan || 12;
+
     const leftProps = {
         xs: 24,
         sm: span,

@@ -16,7 +16,7 @@ const BaseNumber = (props) => {
         onChange: (e) => {
             props.onChange({
                 id: props.id,
-                value: e
+                value: e,
             })
         },
         style: props.style,

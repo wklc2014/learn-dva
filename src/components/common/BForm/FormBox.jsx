@@ -43,6 +43,12 @@ class FormBox extends Component {
         showTime                    : true,
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        const next = JSON.stringify(nextProps);
+        const prev = JSON.stringify(this.props);
+        return next !== prev;
+    }
+
     getNewClassName = () => {
         const { layout, className } = this.props;
 

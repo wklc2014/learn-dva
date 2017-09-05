@@ -16,7 +16,7 @@ const BaseCheckbox = (props) => {
         onChange: (e) => {
             props.onChange({
                 id: props.id,
-                value: e
+                value: e,
             })
         },
         options: props.option,
