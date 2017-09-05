@@ -5,35 +5,46 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import lodash from 'lodash';
 import { Form, Checkbox } from 'antd';
+import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 
 const BaseCheckbox = (props) => {
+    const {
+        className,
+        disabled,
+        getFieldDecorator,
+        id,
+        label,
+        layout,
+        onChange,
+        options,
+        rules,
+        style,
+        value,
+    } = props;
 
     const defaultProps = {
-        disabled: props.disabled,
-        onChange: (e) => {
-            props.onChange({
-                id: props.id,
-                value: e,
-            })
+        disabled,
+        onChange: (value) => {
+            onChange({ id, value });
         },
-        options: props.option,
-        style: props.style,
+        options,
+        style,
     };
 
     const ChildEle = <CheckboxGroup {...defaultProps} />;
 
     return (
         <FormItem
-            {...props.layout}
-            label={props.label}
-            className={props.className}
+            {...layout}
+            label={label}
+            className={className}
         >
-            {props.getFieldDecorator(props.id, {
-                rules: props.rules,
-                initialValue: props.value,
+            {getFieldDecorator(id, {
+                rules,
+                initialValue: value,
             })(ChildEle)}
         </FormItem>
     );
@@ -47,10 +58,11 @@ BaseCheckbox.propTypes = {
     label: propTypes.string,
     layout: propTypes.object,
     onChange: propTypes.func.isRequired,
-    option: propTypes.array.isRequired,
+    options: propTypes.array.isRequired,
     rules: propTypes.array,
     style: propTypes.object,
 };
 
-export default BaseCheckbox;
+// export default BaseCheckbox;
+export default FormBox(BaseCheckbox);
 

@@ -6,38 +6,45 @@ import propTypes from 'prop-types';
 import moment from 'moment';
 import lodash from 'lodash';
 import { Form, DatePicker } from 'antd';
+import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
 
 const BaseDatePicker = (props) => {
+    const {
+        addType,
+        className,
+        disabled,
+        format,
+        getFieldDecorator,
+        id,
+        label,
+        layout,
+        onChange,
+        placeholder,
+        rules,
+        style,
+        showTime,
+        value,
+    } = props;
 
     const defaultProps = {
-        disabled: props.disabled,
-        placeholder: props.placeholder,
-        style: props.style,
-        format: props.format,
-        showTime: props.showTime,
+        disabled,
+        placeholder,
+        style,
+        format,
+        showTime,
     };
 
     let ChildEle = null;
-    switch (props.addType) {
+    switch (addType) {
         case 'range':
             ChildEle = (
                 <RangePicker
                     {...defaultProps}
-                    onChange={(e) => {
-                        let value = [];
-                        if (e.length) {
-                            value = [
-                                moment(e[0]).format(props.format),
-                                moment(e[1]).format(props.format)
-                            ];
-                        }
-                        props.onChange({
-                            id: props.id,
-                            value,
-                        });
+                    onChange={(value) => {
+                        onChange({ id, value });
                     }}
                 />
             );
@@ -46,12 +53,8 @@ const BaseDatePicker = (props) => {
             ChildEle = (
                 <DatePicker
                     {...defaultProps}
-                    onChange={(e) => {
-                        const value = e ? moment(e).format(props.format) : undefined;
-                        props.onChange({
-                            id: props.id,
-                            value,
-                        });
+                    onChange={(value) => {
+                        onChange({ id, value });
                     }}
                 />
             );
@@ -59,13 +62,13 @@ const BaseDatePicker = (props) => {
 
     return (
         <FormItem
-            {...props.layout}
-            label={props.label}
-            className={props.className}
+            {...layout}
+            label={label}
+            className={className}
         >
-            {props.getFieldDecorator(props.id, {
-                rules: props.rules,
-                initialValue: props.value,
+            {getFieldDecorator(id, {
+                rules,
+                initialValue: value,
             })(ChildEle)}
         </FormItem>
     );
@@ -90,5 +93,6 @@ BaseDatePicker.propTypes = {
     showTime: propTypes.bool,
 };
 
-export default BaseDatePicker;
+// export default BaseDatePicker;
+export default FormBox(BaseDatePicker);
 

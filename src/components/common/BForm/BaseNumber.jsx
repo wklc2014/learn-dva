@@ -5,38 +5,53 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import lodash from 'lodash';
 import { Form, InputNumber } from 'antd';
+import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 
 const BaseNumber = (props) => {
+    const {
+        className,
+        disabled,
+        extra,
+        getFieldDecorator,
+        id,
+        label,
+        layout,
+        min,
+        max,
+        step,
+        onChange,
+        placeholder,
+        rules,
+        style,
+        value,
+    } = props;
 
     const defaultProps = {
-        disabled: props.disabled,
-        placeholder: props.placeholder,
-        onChange: (e) => {
-            props.onChange({
-                id: props.id,
-                value: e,
-            })
+        disabled,
+        placeholder,
+        onChange: (value) => {
+            props.onChange({ id, value });
         },
-        style: props.style,
-        min: props.min,
-        max: props.max,
-        step: props.step,
+        style,
+        min,
+        max,
+        step,
     };
 
     const ChildEle = <InputNumber {...defaultProps} />;
 
     return (
         <FormItem
-            {...props.layout}
-            label={props.label}
-            className={props.className}
-            extra={props.extra}
+            {...layout}
+            label={label}
+            className={className}
+            extra={extra}
         >
-            {props.getFieldDecorator(props.id, {
-                rules: props.rules,
-                initialValue: props.value,
+            {getFieldDecorator(id, {
+                rules,
+                initialValue: value,
             })(ChildEle)}
         </FormItem>
     );
@@ -59,5 +74,6 @@ BaseNumber.propTypes = {
     style: propTypes.object,
 };
 
-export default BaseNumber;
+// export default BaseNumber;
+export default FormBox(BaseNumber);
 

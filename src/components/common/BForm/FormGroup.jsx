@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { Form, Row, Col } from 'antd';
-import FormBox from './FormBox.jsx';
+import FormWraper from './FormWraper.jsx';
 import { getGridLayout } from './utils/';
 
 class FormGroup extends Component {
@@ -15,7 +15,6 @@ class FormGroup extends Component {
 
     render() {
         const { configs, onChange, values, formProps, col, className } = this.props;
-        const { getFieldDecorator } = this.props.form;
 
         const formEle = Object.keys(configs).sort((m, n) => {
             if (configs[m].order > configs[n].order) {
@@ -30,19 +29,17 @@ class FormGroup extends Component {
             const groupProps = {
                 ...val,
                 ...formProps,
-                getFieldDecorator,
+                form: this.props.form,
                 onChange,
                 key: i,
                 id: v,
                 value: values[v],
             };
             const newColProps = getGridLayout(col, val.colSpan);
-            return <Col key={i} {...newColProps}><FormBox {...groupProps} /></Col>;
+            return <Col key={i} {...newColProps}><FormWraper {...groupProps} /></Col>;
         });
 
-        return (
-            <Form className={className}><Row type="flex">{formEle}</Row></Form>
-        );
+        return <Form className={className}><Row type="flex">{formEle}</Row></Form>;
     }
 }
 

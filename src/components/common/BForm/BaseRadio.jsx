@@ -5,30 +5,43 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import lodash from 'lodash';
 import { Form, Radio } from 'antd';
+import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 
 const BaseRadio = (props) => {
+    const {
+        addType,
+        className,
+        disabled,
+        getFieldDecorator,
+        id,
+        label,
+        layout,
+        onChange,
+        options,
+        placeholder,
+        rules,
+        style,
+        value,
+    } = props;
 
     const defaultProps = {
-        disabled: props.disabled,
-        onChange: (e) => {
-            props.onChange({
-                id: props.id,
-                value: e.target.value,
-            })
+        disabled,
+        onChange: (value) => {
+            onChange({ id, value });
         },
-        style: props.style,
+        style,
     };
 
     let ChildEle = null;
-    switch (props.addType) {
+    switch (addType) {
         case 'button':
             ChildEle = (
                 <RadioGroup {...defaultProps}>
-                    {props.option.map((v, i) => (
+                    {options.map((v, i) => (
                         <RadioButton key={i} value={v.value}>{v.label}</RadioButton>
                     ))}
                 </RadioGroup>
@@ -37,7 +50,7 @@ const BaseRadio = (props) => {
         default:
             ChildEle = (
                 <RadioGroup {...defaultProps}>
-                    {props.option.map((v, i) => (
+                    {options.map((v, i) => (
                         <Radio key={i} value={v.value}>{v.label}</Radio>
                     ))}
                 </RadioGroup>
@@ -46,17 +59,18 @@ const BaseRadio = (props) => {
 
     return (
         <FormItem
-            {...props.layout}
-            label={props.label}
-            className={props.className}
+            {...layout}
+            label={label}
+            className={className}
         >
-            {props.getFieldDecorator(props.id, {
-                rules: props.rules,
-                initialValue: props.value,
+            {getFieldDecorator(id, {
+                rules,
+                initialValue: value,
             })(ChildEle)}
         </FormItem>
     );
 }
+
 
 BaseRadio.propTypes = {
     addType: propTypes.string,
@@ -67,11 +81,12 @@ BaseRadio.propTypes = {
     label: propTypes.string,
     layout: propTypes.object,
     onChange: propTypes.func.isRequired,
-    option: propTypes.array,
+    options: propTypes.array,
     placeholder: propTypes.string,
     rules: propTypes.array,
     style: propTypes.object,
 };
 
-export default BaseRadio;
+// export default BaseRadio;
+export default FormBox(BaseRadio);
 

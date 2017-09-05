@@ -5,38 +5,55 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import lodash from 'lodash';
 import { Form, Input, Row, Col, Radio, Button } from 'antd';
+import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
 const BaseInput = (props) => {
-    const { disabled, placeholder } = props;
+    console.log('BaseInput render>>>');
+    const {
+        addType,
+        className,
+        childGutter,
+        childSpan,
+        disabled,
+        extra,
+        getFieldDecorator,
+        id,
+        label,
+        layout,
+        onChange,
+        options,
+        placeholder,
+        rules,
+        style,
+        toUpperCase,
+        toLowerCase,
+        value,
+    } = props;
 
     const defaultProps = {
         disabled,
         placeholder,
         size: 'large',
         onChange: (e) => {
-            props.onChange({
-                id: props.id,
-                value: e.target.value,
-            });
+            onChange({ id, value: e.target.value });
         },
-        style: props.style,
+        style,
     };
 
     let ChildEle = null;
 
-    const gutter = props.childGutter;
-    const childSpanLeft = lodash.get(props, 'childSpan.left', {});
-    const childSpanRight = lodash.get(props, 'childSpan.right', {});
+    const childSpanLeft = lodash.get(childSpan, 'left', {});
+    const childSpanRight = lodash.get(childSpan, 'right', {});
     const inputEle = <Input {...defaultProps} />;
 
-    switch (props.addType) {
+    switch (addType) {
         case 'button':
-            const btnEle = props.option.map((v, i) => {
+            const btnEle = options.map((v, i) => {
                 const style = { marginBottom: 8 };
-                if (i < props.option.length - 1) {
+                if (i < options.length - 1) {
                     style.marginRight = '8px';
                 }
 
@@ -54,8 +71,8 @@ const BaseInput = (props) => {
                             key={i}
                             options={v.citys}
                             onChange={(value) => {
-                                props.onChange({
-                                    id: props.id,
+                                onChange({
+                                    id,
                                     value: v.value,
                                     type: 'button',
                                     addValue: value,
@@ -70,9 +87,9 @@ const BaseInput = (props) => {
                 return (
                     <Button
                         {...btnProps}
-                        onClick={(e) => {
-                            props.onChange({
-                                id: props.id,
+                        onClick={() => {
+                            onChange({
+                                id,
                                 value: v.value,
                                 type: 'button',
                             });
@@ -83,11 +100,11 @@ const BaseInput = (props) => {
                 )
             });
             ChildEle = (
-                <Row type="flex" gutter={gutter}>
+                <Row type="flex" gutter={childGutter}>
                     <Col {...childSpanLeft}>
-                        {props.getFieldDecorator(props.id, {
-                            rules: props.rules,
-                            initialValue: props.value,
+                        {getFieldDecorator(id, {
+                            rules,
+                            initialValue: value,
                         })(inputEle)}
                     </Col>
                     <Col {...childSpanRight}>
@@ -97,28 +114,28 @@ const BaseInput = (props) => {
             );
             break;
         case 'radio':
-            const radioValue = lodash.get(props, 'value.radioValue', undefined);
-            const inputValue = lodash.get(props, 'value.inputValue', undefined);
+            const radioValue = lodash.get(value, 'radioValue', undefined);
+            const inputValue = lodash.get(value, 'inputValue', undefined);
             const radioEle = (
                 <RadioGroup
                     disabled={disabled}
                     value={radioValue}
                     onChange={(e) => {
-                        props.onChange({
-                            id: props.id,
+                        onChange({
+                            id,
                             value: e.target.value,
                             type: 'radio',
                         });
                     }}
                 >
-                    {props.option.map((v, i) => <Radio key={i} value={v.value}>{v.label}</Radio>)}
+                    {options.map((v, i) => <Radio key={i} value={v.value}>{v.label}</Radio>)}
                 </RadioGroup>
             );
             ChildEle = (
-                <Row type="flex" gutter={gutter}>
+                <Row type="flex" gutter={childGutter}>
                     <Col {...childSpanLeft}>
-                        {props.getFieldDecorator(props.id, {
-                            rules: props.rules,
+                        {getFieldDecorator(id, {
+                            rules,
                             initialValue: inputValue,
                         })(inputEle)}
                     </Col>
@@ -129,18 +146,18 @@ const BaseInput = (props) => {
             );
             break;
         default:
-            ChildEle = props.getFieldDecorator(props.id, {
-                rules: props.rules,
-                initialValue: props.value,
+            ChildEle = getFieldDecorator(id, {
+                rules,
+                initialValue: value,
             })(inputEle);
     }
 
     return (
         <FormItem
-            {...props.layout}
-            label={props.label}
-            className={props.className}
-            extra={props.extra}
+            {...layout}
+            label={label}
+            className={className}
+            extra={extra}
         >
             {ChildEle}
         </FormItem>
@@ -150,6 +167,8 @@ const BaseInput = (props) => {
 BaseInput.propTypes = {
     addType: propTypes.string,
     className: propTypes.string,
+    childGutter: propTypes.number,
+    childSpan: propTypes.object,
     disabled: propTypes.bool,
     extra: propTypes.string,
     getFieldDecorator: propTypes.func.isRequired,
@@ -157,7 +176,7 @@ BaseInput.propTypes = {
     label: propTypes.string,
     layout: propTypes.object,
     onChange: propTypes.func.isRequired,
-    option: propTypes.array,
+    options: propTypes.array,
     placeholder: propTypes.string,
     rules: propTypes.array,
     style: propTypes.object,
@@ -165,5 +184,6 @@ BaseInput.propTypes = {
     toLowerCase: propTypes.bool,
 };
 
-export default BaseInput;
+// export default BaseInput;
+export default FormBox(BaseInput);
 

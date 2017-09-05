@@ -2,27 +2,49 @@ import React, { Component } from 'react';
 import lodash from 'lodash';
 import propTypes from 'prop-types';
 import { Form, Input, Select } from 'antd';
+import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 const InputGroup = Input.Group;
 
 const BaseInputAdd = (props) => {
+    const {
+        addType,
+        className,
+        childGutter,
+        childSpan,
+        disabled,
+        dropdownMatchSelectWidth,
+        extra,
+        getFieldDecorator,
+        id,
+        label,
+        layout,
+        onChange,
+        options,
+        placeholder,
+        rules,
+        selectWidth,
+        style,
+        value,
+    } = props;
 
     const commonProps = {
-        disabled: props.disabled,
-    };
-    const defaultProps = {
-        ...commonProps,
-        placeholder: props.placeholder,
-        style: props.style,
+        disabled,
     };
 
-    const inputValue = lodash.get(props, 'value.inputValue', undefined);
-    let addValue = lodash.get(props, 'value.addValue', undefined);
-    switch (props.addType) {
+    const defaultProps = {
+        ...commonProps,
+        placeholder,
+        style,
+    };
+
+    const inputValue = lodash.get(value, 'inputValue', undefined);
+    let addValue = lodash.get(value, 'addValue', undefined);
+    switch (addType) {
         case 'before-select':
-            const selectOptionEle = props.option.map((v, i) => {
+            const selectOptionEle = options.map((v, i) => {
                 if (v.selected && !addValue) {
                     addValue = v.value;
                 }
@@ -30,11 +52,11 @@ const BaseInputAdd = (props) => {
             });
             const addonBeforeProps = {
                 ...commonProps,
-                style: { width: props.selectWidth },
+                style: { width: selectWidth },
                 value: addValue,
                 onChange: (e) => {
-                    props.onChange({
-                        id: props.id,
+                    onChange({
+                        id,
                         value: { inputValue, addValue: e },
                     });
                 },
@@ -47,8 +69,8 @@ const BaseInputAdd = (props) => {
         <Input
             {...defaultProps}
              onChange={(e) => {
-                props.onChange({
-                    id: props.id,
+                onChange({
+                    id,
                     value: { inputValue: e.target.value, addValue },
                 });
              }}
@@ -57,12 +79,12 @@ const BaseInputAdd = (props) => {
 
     return (
         <FormItem
-            {...props.layout}
-            label={props.label}
-            className={props.className}
+            {...layout}
+            label={label}
+            className={className}
         >
-            {props.getFieldDecorator(props.id, {
-                rules: props.rules,
+            {getFieldDecorator(id, {
+                rules,
                 initialValue: inputValue,
             })(ChildEle)}
         </FormItem>
@@ -72,19 +94,22 @@ const BaseInputAdd = (props) => {
 BaseInputAdd.propTypes = {
     addType: propTypes.string,
     className: propTypes.string,
+    childGutter: propTypes.number,
+    childSpan: propTypes.object,
     disabled: propTypes.bool,
     dropdownMatchSelectWidth: propTypes.bool,
     extra: propTypes.string,
-     getFieldDecorator: propTypes.func.isRequired,
+    getFieldDecorator: propTypes.func.isRequired,
     id: propTypes.string.isRequired,
     label: propTypes.string,
     layout: propTypes.object,
     onChange: propTypes.func.isRequired,
-    option: propTypes.array.isRequired,
+    options: propTypes.array.isRequired,
     placeholder: propTypes.string,
     rules: propTypes.array,
-    style: propTypes.object,
     selectWidth: propTypes.number,
+    style: propTypes.object,
 };
 
-export default BaseInputAdd;
+// export default BaseInputAdd;
+export default FormBox(BaseInputAdd);

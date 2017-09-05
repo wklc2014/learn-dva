@@ -6,23 +6,31 @@ import propTypes from 'prop-types';
 import lodash from 'lodash';
 import { Form } from 'antd';
 import moment from 'moment';
+import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 
 const BaseText = (props) => {
+    const {
+        className,
+        label,
+        layout,
+        style,
+        value,
+    } = props;
 
     const defaultProps = {
         className: 'ant-form-text',
-        style: props.style,
+        style,
     };
 
-    const ChildEle = <span {...defaultProps}>{props.value}</span>;
+    const ChildEle = <span {...defaultProps}>{value}</span>;
 
     return (
         <FormItem
-            {...props.layout}
-            label={props.label}
-            className={props.className}
+            {...layout}
+            label={label}
+            className={className}
         >
             {ChildEle}
         </FormItem>
@@ -37,5 +45,6 @@ BaseText.propTypes = {
 };
 
 
-export default BaseText;
+// export default BaseText;
+export default FormBox(BaseText);
 
