@@ -74,7 +74,7 @@ const BaseInput = (props) => {
                             props.onChange({
                                 id: props.id,
                                 value: v.value,
-                                type: 'button'
+                                type: 'button',
                             });
                         }}
                     >

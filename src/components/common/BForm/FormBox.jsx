@@ -49,6 +49,14 @@ class FormBox extends Component {
         return next !== prev;
     }
 
+    onChange = ({ id, value, type, addValue }) => {
+        let newValue = value;
+        if (this.props.toUpper && typeof value === 'string') {
+            newValue = value.toUpperCase();
+        }
+        this.props.onChange({ id, value: newValue, type, addValue });
+    }
+
     getNewClassName = () => {
         const { layout, className } = this.props;
 
@@ -246,7 +254,7 @@ class FormBox extends Component {
                     id: this.props.id,
                     label: this.props.label,
                     layout: newLayout,
-                    onChange: this.props.onChange,
+                    onChange: this.onChange,
                     option: newOption,
                     placeholder: newPlaceholder,
                     rules: newRules,
@@ -263,7 +271,7 @@ class FormBox extends Component {
                     id: this.props.id,
                     label: this.props.label,
                     layout: newLayout,
-                    onChange: this.props.onChange,
+                    onChange: this.onChange,
                     option: newOption,
                     rules: newRules,
                     style: newStyle,
@@ -281,7 +289,7 @@ class FormBox extends Component {
                     id: this.props.id,
                     label: this.props.label,
                     layout: newLayout,
-                    onChange: this.props.onChange,
+                    onChange: this.onChange,
                     placeholder: newPlaceholder,
                     rules: newRules,
                     style: newStyle,
@@ -302,11 +310,12 @@ class FormBox extends Component {
                     id: this.props.id,
                     label: this.props.label,
                     layout: newLayout,
-                    onChange: this.props.onChange,
+                    onChange: this.onChange,
                     option: newOption,
                     placeholder: newPlaceholder,
                     rules: newRules,
                     style: newStyle,
+                    toUpper: this.props.toUpper,
                     value: newValue,
                 }
                 ChildEle = <BaseInput {...inputProps} />;
@@ -323,7 +332,7 @@ class FormBox extends Component {
                     min: this.props.min,
                     max: this.props.max,
                     step: this.props.step,
-                    onChange: this.props.onChange,
+                    onChange: this.onChange,
                     placeholder: newPlaceholder,
                     rules: newRules,
                     style: newStyle,
@@ -342,7 +351,7 @@ class FormBox extends Component {
                     id: this.props.id,
                     label: this.props.label,
                     layout: newLayout,
-                    onChange: this.props.onChange,
+                    onChange: this.onChange,
                     option: newOption,
                     placeholder: newPlaceholder,
                     rules: newRules,
@@ -363,7 +372,7 @@ class FormBox extends Component {
                     label: this.props.label,
                     layout: newLayout,
                     mode: this.props.mode,
-                    onChange: this.props.onChange,
+                    onChange: this.onChange,
                     option: newOption,
                     placeholder: newPlaceholder,
                     rules: newRules,
@@ -385,7 +394,7 @@ class FormBox extends Component {
                     id: this.props.id,
                     label: this.props.label,
                     layout: newLayout,
-                    onChange: this.props.onChange,
+                    onChange: this.onChange,
                     option: newOption,
                     placeholder: newPlaceholder,
                     rules: newRules,
@@ -417,7 +426,7 @@ class FormBox extends Component {
                     id: this.props.id,
                     label: this.props.label,
                     layout: newLayout,
-                    onChange: this.props.onChange,
+                    onChange: this.onChange,
                     option: newOption,
                     placeholder: newPlaceholder,
                     rows: this.props.rows,

@@ -64,6 +64,12 @@ export const CONFIG_USER_SURVERY = {
             { label: '同三者', value: '02' },
         ]
     },
+    carNumber: {
+        order: 6,
+        type: 'input',
+        label: '车牌号码',
+        toUpper: true,
+    },
     ploicyMoney: {
         order: 6,
         type: 'number',
