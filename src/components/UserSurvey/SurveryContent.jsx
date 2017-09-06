@@ -13,11 +13,6 @@ class SurveryContent extends Component {
     static defaultProps = {
     }
 
-    // componentDidMount = () => {
-    //     const a = this.props.getWrappedInstance();
-    //     console.log(222, a)
-    // }
-
     onChange = ({ id, value, type, addValue }) => {
         // console.log(id, value, type, addValue);
         const newValue = { [id]: value };
@@ -25,20 +20,17 @@ class SurveryContent extends Component {
             case 'contactPhone':
                 if (type === 'radio') {
                     const t = { '01': '标的:13591993996', '02': '三者:18111224835' };
-                    newValue[id] = { inputValue: t[value], radioValue: value };
-                    this.refs.formGroup_1.setFieldsValue({ [id]: t[value] });
+                    newValue[id] = { inputValue: t[value], addValue: value };
                 }
                 break;
             case 'address':
                 if (type === 'button') {
                     const t = { '01': '标的:13591993996', '02': '三者:18111224835' };
-                    newValue[id] = [t[value], value];
-                    this.refs.formGroup_1.setFieldsValue({ [id]: t[value] });
+                    newValue[id] = t[value];
                 }
             case 'accidentCreate':
                 if (type === 'button' && value === '01') {
                     newValue[id] = '自动生成描述巴拉巴拉小魔仙';
-                    this.refs.formGroup_1.setFieldsValue({ [id]: '自动生成描述巴拉巴拉小魔仙' });
                 }
                 break;
         }

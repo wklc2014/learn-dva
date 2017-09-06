@@ -17,14 +17,14 @@ class FormGroup extends Component {
         const { configs } = this.props;
         const ids = Object.keys(configs).map((v) => v);
         let canSubmit = true;
-        ids.some((id) => {
+        console.log('ids>>>', ids)
+        ids.forEach((id) => {
             const ref = this.refs[`FormBox_${id}`].refs[`BaseForm_${id}`];
             ref.validateFields((errors, values) => {
-                if (errors) {
+                if (errors && canSubmit) {
                     canSubmit = false;
                 }
             })
-            return canSubmit;
         })
         return canSubmit;
     }

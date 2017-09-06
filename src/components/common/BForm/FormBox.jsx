@@ -28,7 +28,7 @@ import { getChildGridLayout } from './utils/';
 class FormBox extends Component {
 
     static defaultProps = {
-        allowClear                  : false,
+        allowClear                  : true,
         childSpan                   : 9,
         childGutter                 : 16,
         disabled                    : false,
@@ -96,14 +96,14 @@ class FormBox extends Component {
             case 'input':
                 if (this.props.addType === 'radio') {
                     let inputValue = '';
-                    let radioValue = '';
+                    let addValue = '';
                     if (!value || (value && typeof value === 'string')) {
                         inputValue = value;
                     } else {
                         inputValue = value.inputValue;
-                        radioValue = value.radioValue;
+                        addValue = value.addValue;
                     }
-                    newValues = { inputValue, radioValue };
+                    newValues = { inputValue, addValue };
                 }
                 break;
             case 'inputAdd':

@@ -1,7 +1,7 @@
 // 用户调查字段配置
 export const CONFIG_USER_SURVERY = {
     lossPart: {
-        order: 2,
+        order: 1,
         type: 'cascader',
         label: '受伤部位',
         area: 'quanguo',
@@ -11,7 +11,7 @@ export const CONFIG_USER_SURVERY = {
         }
     },
     payMoney: {
-        order: 3,
+        order: 2,
         type: 'checkbox',
         label: '赔付金额',
         option: [
@@ -25,19 +25,19 @@ export const CONFIG_USER_SURVERY = {
         colSpan: 2,
     },
     reportDate: {
-        order: 4,
+        order: 3,
         type: 'date',
         label: '报案日期',
     },
     translateDate: {
-        order: 5,
+        order: 4,
         type: 'date',
         addType: 'range',
         label: '运输起止日期',
         placeholder: '运输日期',
     },
     userName: {
-        order: 1,
+        order: 5,
         type: 'input',
         label: '用户姓名',
         extra: '最多输入500个字',
@@ -49,7 +49,7 @@ export const CONFIG_USER_SURVERY = {
         toLowerCase: true,
     },
     address: {
-        order: 7,
+        order: 6,
         type: 'input',
         addType: 'button',
         label: '地址',
@@ -74,13 +74,13 @@ export const CONFIG_USER_SURVERY = {
         }
     },
     carNumber: {
-        order: 6,
+        order: 8,
         type: 'input',
         label: '车牌号码',
         toUpperCase: true,
     },
     phoneNumber: {
-        order: 6,
+        order: 9,
         type: 'input',
         label: '手机号码',
         rules: {
@@ -89,13 +89,13 @@ export const CONFIG_USER_SURVERY = {
         }
     },
     ploicyMoney: {
-        order: 6,
+        order: 10,
         type: 'number',
         label: '保单金额',
         rules: { required: true }
     },
     sex: {
-        order: 7,
+        order: 11,
         type: 'radio',
         label: '被保人性别',
         option: [
@@ -106,7 +106,7 @@ export const CONFIG_USER_SURVERY = {
         ]
     },
     type: {
-        order: 7,
+        order: 12,
         type: 'radio',
         addType: 'button',
         label: '类别',
@@ -116,7 +116,7 @@ export const CONFIG_USER_SURVERY = {
         ]
     },
     carMarkType: {
-        order: 8,
+        order: 13,
         type: 'enum',
         label: '号牌种类',
         option: [
@@ -131,8 +131,8 @@ export const CONFIG_USER_SURVERY = {
             { value: '09', label: '使馆摩托车号牌' },
         ]
     },
-    contactNo: {
-        order: 8,
+    carNoAddress: {
+        order: 14,
         type: 'inputAdd',
         addType: 'before-select',
         label: '号牌归属地',
@@ -144,7 +144,7 @@ export const CONFIG_USER_SURVERY = {
         selectWidth: 60,
     },
     accidentDescription: {
-        order: 9,
+        order: 15,
         type: 'textarea',
         label: '出险描述',
         colSpan: 2,
@@ -152,10 +152,10 @@ export const CONFIG_USER_SURVERY = {
         extra: '最多输入500个字',
     },
     accidentCreate: {
-        order: 9,
+        order: 16,
         type: 'textarea',
         addType: 'button',
-        label: '出险描述',
+        label: '生成描述',
         colSpan: 3,
         option: [
             { value: '01', label: '生成描述', type: 'primary' },
