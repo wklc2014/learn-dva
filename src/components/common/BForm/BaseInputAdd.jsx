@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import lodash from 'lodash';
 import propTypes from 'prop-types';
 import { Form, Input, Select } from 'antd';
-import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -111,5 +110,4 @@ BaseInputAdd.propTypes = {
     style: propTypes.object,
 };
 
-// export default BaseInputAdd;
-export default FormBox(BaseInputAdd);
+export default BaseInputAdd;

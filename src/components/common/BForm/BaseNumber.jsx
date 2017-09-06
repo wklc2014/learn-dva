@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import lodash from 'lodash';
 import { Form, InputNumber } from 'antd';
-import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 
@@ -74,6 +73,4 @@ BaseNumber.propTypes = {
     style: propTypes.object,
 };
 
-// export default BaseNumber;
-export default FormBox(BaseNumber);
-
+export default BaseNumber;

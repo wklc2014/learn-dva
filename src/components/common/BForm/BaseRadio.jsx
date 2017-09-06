@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import lodash from 'lodash';
 import { Form, Radio } from 'antd';
-import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -87,6 +86,4 @@ BaseRadio.propTypes = {
     style: propTypes.object,
 };
 
-// export default BaseRadio;
-export default FormBox(BaseRadio);
-
+export default BaseRadio;

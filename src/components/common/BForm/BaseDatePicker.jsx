@@ -6,7 +6,6 @@ import propTypes from 'prop-types';
 import moment from 'moment';
 import lodash from 'lodash';
 import { Form, DatePicker } from 'antd';
-import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
@@ -31,6 +30,9 @@ const BaseDatePicker = (props) => {
 
     const defaultProps = {
         disabled,
+        onChange(value) {
+            onChange({ id, value });
+        },
         placeholder,
         style,
         format,
@@ -40,24 +42,10 @@ const BaseDatePicker = (props) => {
     let ChildEle = null;
     switch (addType) {
         case 'range':
-            ChildEle = (
-                <RangePicker
-                    {...defaultProps}
-                    onChange={(value) => {
-                        onChange({ id, value });
-                    }}
-                />
-            );
+            ChildEle = <RangePicker {...defaultProps} />;
             break;
         default:
-            ChildEle = (
-                <DatePicker
-                    {...defaultProps}
-                    onChange={(value) => {
-                        onChange({ id, value });
-                    }}
-                />
-            );
+            ChildEle = <DatePicker {...defaultProps} />;
     }
 
     return (
@@ -93,6 +81,4 @@ BaseDatePicker.propTypes = {
     showTime: propTypes.bool,
 };
 
-// export default BaseDatePicker;
-export default FormBox(BaseDatePicker);
-
+export default BaseDatePicker;

@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import lodash from 'lodash';
 import { Form, Input, Row, Col, Button } from 'antd';
-import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -38,9 +37,9 @@ const BaseTextArea = (props) => {
     const defaultProps = {
         ...commonProps,
         placeholder,
-        // onChange: (e) => {
-        //     onChange({ id, value: e.target.value });
-        // },
+        onChange: (e) => {
+            onChange({ id, value: e.target.value });
+        },
         style,
         rows,
     };
@@ -127,5 +126,4 @@ BaseTextArea.propTypes = {
     style: propTypes.object,
 };
 
-// export default BaseTextArea;
-export default FormBox(BaseTextArea);
+export default BaseTextArea;

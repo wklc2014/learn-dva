@@ -5,13 +5,11 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import lodash from 'lodash';
 import { Form, Input, Row, Col, Radio, Button } from 'antd';
-import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
 const BaseInput = (props) => {
-    console.log('BaseInput render>>>');
     const {
         addType,
         className,
@@ -184,6 +182,4 @@ BaseInput.propTypes = {
     toLowerCase: propTypes.bool,
 };
 
-// export default BaseInput;
-export default FormBox(BaseInput);
-
+export default BaseInput;

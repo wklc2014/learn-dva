@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import lodash from 'lodash';
 import { Form, Checkbox } from 'antd';
-import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
@@ -63,6 +62,4 @@ BaseCheckbox.propTypes = {
     style: propTypes.object,
 };
 
-// export default BaseCheckbox;
-export default FormBox(BaseCheckbox);
-
+export default BaseCheckbox;

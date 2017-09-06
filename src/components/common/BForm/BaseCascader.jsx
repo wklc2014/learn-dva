@@ -6,7 +6,6 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import lodash from 'lodash';
 import { Form, Cascader } from 'antd';
-import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 
@@ -69,6 +68,4 @@ BaseCascader.propTypes = {
     style: propTypes.object,
 };
 
-// export default BaseCascader;
-export default FormBox(BaseCascader);
-
+export default BaseCascader;

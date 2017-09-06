@@ -6,7 +6,6 @@ import propTypes from 'prop-types';
 import lodash from 'lodash';
 import { Form } from 'antd';
 import moment from 'moment';
-import FormBox from './FormBox.jsx';
 
 const FormItem = Form.Item;
 
@@ -45,6 +44,4 @@ BaseText.propTypes = {
 };
 
 
-// export default BaseText;
-export default FormBox(BaseText);
-
+export default BaseText;
