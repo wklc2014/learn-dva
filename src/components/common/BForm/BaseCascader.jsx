@@ -10,6 +10,8 @@ import { Form, Cascader } from 'antd';
 const FormItem = Form.Item;
 
 const BaseCascader = (props) => {
+    console.log('BaseCascader render');
+
     const {
         allowClear,
         className,

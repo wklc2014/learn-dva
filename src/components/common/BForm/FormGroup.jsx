@@ -17,25 +17,26 @@ class FormGroup extends Component {
         const { configs, onChange, values, formProps, col, className } = this.props;
 
         const formEle = Object.keys(configs)
-            // .sort((m, n) => {
-            //     if (configs[m].order > configs[n].order) {
-            //         return 1;
-            //     } else if (configs[m].order < configs[n].order) {
-            //         return -1;
-            //     } else {
-            //         return 0;
-            //     }
-            // })
+            .sort((m, n) => {
+                if (configs[m].order > configs[n].order) {
+                    return 1;
+                } else if (configs[m].order < configs[n].order) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            })
             .map((v, i) => {
                 const val = configs[v];
                 const groupProps = {
                     ...val,
                     ...formProps,
-                    form: this.props.form,
+                    // form: this.props.form,
                     onChange,
                     key: i,
                     id: v,
                     value: values[v],
+                    ref: `FormBox_${v}`,
                 };
                 const newColProps = getGridLayout(col, val.colSpan);
                 return <Col key={`formGroup_${i}`} {...newColProps}><FormBox {...groupProps} /></Col>;
@@ -54,4 +55,5 @@ FormGroup.propTypes = {
     className: propTypes.string,
 };
 
-export default Form.create()(FormGroup);
+// export default Form.create()(FormGroup);
+export default FormGroup;

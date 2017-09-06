@@ -10,6 +10,7 @@ const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 
 const BaseInput = (props) => {
+
     const {
         addType,
         className,
@@ -168,8 +169,8 @@ BaseInput.propTypes = {
     childGutter: propTypes.number,
     childSpan: propTypes.object,
     disabled: propTypes.bool,
-    extra: propTypes.string,
     getFieldDecorator: propTypes.func.isRequired,
+    extra: propTypes.string,
     id: propTypes.string.isRequired,
     label: propTypes.string,
     layout: propTypes.object,

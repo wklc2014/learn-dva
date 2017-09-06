@@ -6,6 +6,8 @@ import propTypes from 'prop-types';
 import lodash from 'lodash';
 import moment from 'moment';
 import classnames from 'classnames';
+import { Form } from 'antd';
+
 import formLayout from './formLayout/';
 
 import BaseCascader from './BaseCascader.jsx';
@@ -255,196 +257,158 @@ class FormBox extends Component {
         const newChildSpan = getChildGridLayout(this.props.childSpan);
 
         let ChildEle = null;
+
+        const commonProps = {
+            className: newClassName,
+            getFieldDecorator: this.props.form.getFieldDecorator,
+            label: this.props.label,
+            layout: newLayout,
+            // ref: `BaseForm_${this.props.id}`,
+            style: newStyle,
+            value: newValue,
+        }
+
         switch (this.props.type) {
             case 'cascader':
                 const cascaderProps = {
+                    ...commonProps,
                     allowClear: this.props.allowClear,
-                    className: newClassName,
                     disabled: this.props.disabled,
-                    getFieldDecorator: this.props.form.getFieldDecorator,
                     id: this.props.id,
-                    label: this.props.label,
-                    layout: newLayout,
                     onChange: this.onChange,
                     options: newOption,
                     placeholder: newPlaceholder,
                     rules: newRules,
-                    style: newStyle,
-                    value: newValue,
                 }
                 ChildEle = <BaseCascader {...cascaderProps} />;
                 break;
             case 'checkbox':
                 const checkboxProps = {
-                    className: newClassName,
+                    ...commonProps,
                     disabled: this.props.disabled,
-                    getFieldDecorator: this.props.form.getFieldDecorator,
                     id: this.props.id,
-                    label: this.props.label,
-                    layout: newLayout,
                     onChange: this.onChange,
                     options: newOption,
                     rules: newRules,
-                    style: newStyle,
-                    value: newValue,
                 }
                 ChildEle = <BaseCheckbox {...checkboxProps} />;
                 break;
             case 'date':
                 const dateProps = {
+                    ...commonProps,
                     addType: this.props.addType,
-                    className: newClassName,
                     disabled: this.props.disabled,
                     format: this.props.format,
-                    getFieldDecorator: this.props.form.getFieldDecorator,
                     id: this.props.id,
-                    label: this.props.label,
-                    layout: newLayout,
                     onChange: this.onChange,
                     placeholder: newPlaceholder,
                     rules: newRules,
-                    style: newStyle,
                     showTime: this.props.showTime,
-                    value: newValue,
                 }
                 ChildEle = <BaseDatePicker {...dateProps} />;
                 break;
             case 'input':
                 const inputProps = {
+                    ...commonProps,
                     addType: this.props.addType,
-                    className: newClassName,
                     childGutter: this.props.childGutter,
                     childSpan: newChildSpan,
                     disabled: this.props.disabled,
                     extra: this.props.extra,
-                    getFieldDecorator: this.props.form.getFieldDecorator,
                     id: this.props.id,
-                    label: this.props.label,
-                    layout: newLayout,
                     onChange: this.onChange,
                     options: newOption,
                     placeholder: newPlaceholder,
                     rules: newRules,
-                    style: newStyle,
                     toUpperCase: this.props.toUpperCase,
                     toLowerCase: this.props.toLowerCase,
-                    value: newValue,
                 }
                 ChildEle = <BaseInput {...inputProps} />;
                 break;
             case 'number':
                 const numberProps = {
-                    className: newClassName,
+                    ...commonProps,
                     disabled: this.props.disabled,
                     extra: this.props.extra,
-                    getFieldDecorator: this.props.form.getFieldDecorator,
                     id: this.props.id,
-                    label: this.props.label,
-                    layout: newLayout,
                     min: this.props.min,
                     max: this.props.max,
                     step: this.props.step,
                     onChange: this.onChange,
                     placeholder: newPlaceholder,
                     rules: newRules,
-                    style: newStyle,
-                    value: newValue,
                 }
                 ChildEle = <BaseNumber {...numberProps} />;
                 break;
             case 'radio':
                 const radioProps = {
+                    ...commonProps,
                     addType: this.props.addType,
-                    className: newClassName,
                     childGutter: this.props.childGutter,
                     childSpan: newChildSpan,
                     disabled: this.props.disabled,
-                    getFieldDecorator: this.props.form.getFieldDecorator,
                     id: this.props.id,
-                    label: this.props.label,
-                    layout: newLayout,
                     onChange: this.onChange,
                     options: newOption,
                     placeholder: newPlaceholder,
                     rules: newRules,
-                    style: newStyle,
-                    value: newValue,
                 }
                 ChildEle = <BaseRadio {...radioProps} />;
                 break;
             case 'enum':
                 const enumProps = {
+                    ...commonProps,
                     allowClear: this.props.allowClear,
-                    className: newClassName,
                     disabled: this.props.disabled,
                     dropdownMatchSelectWidth: this.props.dropdownMatchSelectWidth,
                     extra: this.props.extra,
-                    getFieldDecorator: this.props.form.getFieldDecorator,
                     id: this.props.id,
-                    label: this.props.label,
-                    layout: newLayout,
                     mode: this.props.mode,
                     onChange: this.onChange,
                     options: newOption,
                     placeholder: newPlaceholder,
                     rules: newRules,
-                    style: newStyle,
-                    value: newValue,
                 }
                 ChildEle = <BaseSelect {...enumProps} />;
                 break;
             case 'inputAdd':
                 const inputAddProps = {
+                    ...commonProps,
                     addType: this.props.addType,
-                    className: newClassName,
                     childGutter: this.props.childGutter,
                     childSpan: newChildSpan,
                     disabled: this.props.disabled,
                     dropdownMatchSelectWidth: this.props.dropdownMatchSelectWidth,
                     extra: this.props.extra,
-                    getFieldDecorator: this.props.form.getFieldDecorator,
                     id: this.props.id,
-                    label: this.props.label,
-                    layout: newLayout,
                     onChange: this.onChange,
                     options: newOption,
                     placeholder: newPlaceholder,
                     rules: newRules,
                     selectWidth: this.props.selectWidth,
-                    style: newStyle,
-                    value: newValue,
                 }
                 ChildEle = <BaseInputAdd {...inputAddProps} />;
                 break;
             case 'text':
                 const textProps = {
-                    className: newClassName,
-                    label: this.props.label,
-                    layout: newLayout,
-                    style: newStyle,
-                    value: newValue,
+                    ...commonProps,
                 }
                 ChildEle = <BaseText {...textProps} />;
                 break;
             case 'textarea':
                 const textareaProps = {
+                    ...commonProps,
                     addType: this.props.addType,
-                    className: newClassName,
                     childGutter: this.props.childGutter,
                     childSpan: newChildSpan,
                     disabled: this.props.disabled,
                     extra: this.props.extra,
-                    getFieldDecorator: this.props.form.getFieldDecorator,
                     id: this.props.id,
-                    label: this.props.label,
-                    layout: newLayout,
                     onChange: this.onChange,
                     options: newOption,
                     placeholder: newPlaceholder,
                     rows: this.props.rows,
                     rules: newRules,
-                    style: newStyle,
-                    value: newValue,
                 }
                 ChildEle = <BaseTextArea {...textareaProps} />;
                 break;
@@ -469,4 +433,5 @@ FormBox.propTypes = {
     space: propTypes.number,
 };
 
-export default FormBox;
+// export default FormBox;
+export default Form.create()(FormBox);
