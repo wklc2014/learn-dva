@@ -10,24 +10,27 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 
 const BaseSelect = (props) => {
+
     const {
-        allowClear,
         className,
+        label,
+        layout,
+        style,
+        value,
+
+        allowClear,
         disabled,
         dropdownMatchSelectWidth,
         extra,
-        getFieldDecorator,
         id,
-        label,
-        layout,
         mode,
         onChange,
         options,
         placeholder,
         rules,
-        style,
-        value,
     } = props;
+
+    const { getFieldDecorator } = props.form;
 
     const defaultProps = {
         disabled,
@@ -64,21 +67,21 @@ const BaseSelect = (props) => {
 }
 
 BaseSelect.propTypes = {
-    allowClear: propTypes.bool,
     className: propTypes.string,
+    label: propTypes.string,
+    layout: propTypes.object,
+    style: propTypes.object,
+
+    allowClear: propTypes.bool,
     disabled: propTypes.bool,
     dropdownMatchSelectWidth: propTypes.bool,
     extra: propTypes.string,
-    getFieldDecorator: propTypes.func.isRequired,
     id: propTypes.string.isRequired,
-    label: propTypes.string,
-    layout: propTypes.object,
     mode: propTypes.string,
     onChange: propTypes.func.isRequired,
     options: propTypes.array,
     placeholder: propTypes.string,
     rules: propTypes.array,
-    style: propTypes.object,
 };
 
-export default BaseSelect;
+export default Form.create()(BaseSelect);

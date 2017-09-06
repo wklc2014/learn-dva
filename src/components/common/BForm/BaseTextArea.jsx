@@ -10,25 +10,30 @@ const FormItem = Form.Item;
 const { TextArea } = Input;
 
 const BaseTextArea = (props) => {
+
     const {
-        addType,
         className,
+        label,
+        style,
+        layout,
+        value,
+
+        addType,
         childGutter,
         childSpan,
         disabled,
         extra,
-        getFieldDecorator,
         id,
-        label,
-        layout,
         onChange,
         options,
         placeholder,
         rows,
         rules,
-        style,
-        value,
+        toUpperCase,
+        toLowerCase,
     } = props;
+
+    const { getFieldDecorator } = props.form;
 
     const commonProps = {
         disabled,
@@ -108,22 +113,24 @@ const BaseTextArea = (props) => {
 }
 
 BaseTextArea.propTypes = {
-    addType: propTypes.string,
     className: propTypes.string,
+    label: propTypes.string,
+    layout: propTypes.object,
+    style: propTypes.object,
+
+    addType: propTypes.string,
     childGutter: propTypes.number,
     childSpan: propTypes.object,
     disabled: propTypes.bool,
     extra: propTypes.string,
-    getFieldDecorator: propTypes.func.isRequired,
     id: propTypes.string.isRequired,
-    label: propTypes.string,
-    layout: propTypes.object,
     onChange: propTypes.func.isRequired,
     options: propTypes.array,
     placeholder: propTypes.string,
     rows: propTypes.number,
     rules: propTypes.array,
-    style: propTypes.object,
+    toUpperCase: propTypes.bool,
+    toLowerCase: propTypes.bool,
 };
 
-export default BaseTextArea;
+export default Form.create()(BaseTextArea);

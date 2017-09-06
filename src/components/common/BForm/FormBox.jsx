@@ -45,6 +45,12 @@ class FormBox extends Component {
         showTime                    : true,
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        const next = JSON.stringify(nextProps);
+        const prev = JSON.stringify(this.props);
+        return next !== prev;
+    }
+
     beforeUpdateValue = (value) => {
         value = value;
         if (this.props.toUpperCase && typeof value === 'string') {
@@ -259,13 +265,23 @@ class FormBox extends Component {
         let ChildEle = null;
 
         const commonProps = {
+            ref: `BaseForm_${this.props.id}`,
             className: newClassName,
-            getFieldDecorator: this.props.form.getFieldDecorator,
             label: this.props.label,
             layout: newLayout,
-            // ref: `BaseForm_${this.props.id}`,
             style: newStyle,
             value: newValue,
+
+            addType: this.props.addType,
+            childGutter: this.props.childGutter,
+            childSpan: newChildSpan,
+            disabled: this.props.disabled,
+            extra: this.props.extra,
+            id: this.props.id,
+            onChange: this.onChange,
+            options: newOption,
+            placeholder: newPlaceholder,
+            rules: newRules,
         }
 
         switch (this.props.type) {
@@ -279,7 +295,7 @@ class FormBox extends Component {
                     options: newOption,
                     placeholder: newPlaceholder,
                     rules: newRules,
-                }
+                };
                 ChildEle = <BaseCascader {...cascaderProps} />;
                 break;
             case 'checkbox':
@@ -290,7 +306,7 @@ class FormBox extends Component {
                     onChange: this.onChange,
                     options: newOption,
                     rules: newRules,
-                }
+                };
                 ChildEle = <BaseCheckbox {...checkboxProps} />;
                 break;
             case 'date':
@@ -304,7 +320,7 @@ class FormBox extends Component {
                     placeholder: newPlaceholder,
                     rules: newRules,
                     showTime: this.props.showTime,
-                }
+                };
                 ChildEle = <BaseDatePicker {...dateProps} />;
                 break;
             case 'input':
@@ -333,26 +349,23 @@ class FormBox extends Component {
                     id: this.props.id,
                     min: this.props.min,
                     max: this.props.max,
-                    step: this.props.step,
                     onChange: this.onChange,
                     placeholder: newPlaceholder,
                     rules: newRules,
-                }
+                    step: this.props.step,
+                };
                 ChildEle = <BaseNumber {...numberProps} />;
                 break;
             case 'radio':
                 const radioProps = {
                     ...commonProps,
                     addType: this.props.addType,
-                    childGutter: this.props.childGutter,
-                    childSpan: newChildSpan,
                     disabled: this.props.disabled,
                     id: this.props.id,
                     onChange: this.onChange,
-                    options: newOption,
-                    placeholder: newPlaceholder,
                     rules: newRules,
-                }
+                    step: this.props.step,
+                };
                 ChildEle = <BaseRadio {...radioProps} />;
                 break;
             case 'enum':
@@ -368,7 +381,7 @@ class FormBox extends Component {
                     options: newOption,
                     placeholder: newPlaceholder,
                     rules: newRules,
-                }
+                };
                 ChildEle = <BaseSelect {...enumProps} />;
                 break;
             case 'inputAdd':
@@ -386,13 +399,15 @@ class FormBox extends Component {
                     placeholder: newPlaceholder,
                     rules: newRules,
                     selectWidth: this.props.selectWidth,
+                    toUpperCase: this.props.toUpperCase,
+                    toLowerCase: this.props.toLowerCase,
                 }
                 ChildEle = <BaseInputAdd {...inputAddProps} />;
                 break;
             case 'text':
                 const textProps = {
                     ...commonProps,
-                }
+                };
                 ChildEle = <BaseText {...textProps} />;
                 break;
             case 'textarea':
@@ -409,7 +424,9 @@ class FormBox extends Component {
                     placeholder: newPlaceholder,
                     rows: this.props.rows,
                     rules: newRules,
-                }
+                    toUpperCase: this.props.toUpperCase,
+                    toLowerCase: this.props.toLowerCase,
+                };
                 ChildEle = <BaseTextArea {...textareaProps} />;
                 break;
         }
@@ -433,5 +450,4 @@ FormBox.propTypes = {
     space: propTypes.number,
 };
 
-// export default FormBox;
-export default Form.create()(FormBox);
+export default FormBox;

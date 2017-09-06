@@ -10,22 +10,24 @@ const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 
-const BaseRadio = (props) => {
+const BaseRadio =  (props) => {
+
     const {
-        addType,
         className,
-        disabled,
-        getFieldDecorator,
-        id,
         label,
         layout,
-        onChange,
-        options,
-        placeholder,
-        rules,
         style,
         value,
+
+        addType,
+        disabled,
+        id,
+        onChange,
+        options,
+        rules,
     } = props;
+
+    const { getFieldDecorator } = props.form;
 
     const defaultProps = {
         disabled,
@@ -70,20 +72,18 @@ const BaseRadio = (props) => {
     );
 }
 
-
 BaseRadio.propTypes = {
-    addType: propTypes.string,
     className: propTypes.string,
-    disabled: propTypes.bool,
-    getFieldDecorator: propTypes.func.isRequired,
-    id: propTypes.string.isRequired,
     label: propTypes.string,
     layout: propTypes.object,
+    style: propTypes.object,
+
+    addType: propTypes.string,
+    disabled: propTypes.bool,
+    id: propTypes.string.isRequired,
     onChange: propTypes.func.isRequired,
     options: propTypes.array,
-    placeholder: propTypes.string,
     rules: propTypes.array,
-    style: propTypes.object,
 };
 
-export default BaseRadio;
+export default Form.create()(BaseRadio);

@@ -11,22 +11,25 @@ const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
 
 const BaseDatePicker = (props) => {
+
     const {
-        addType,
         className,
-        disabled,
-        format,
-        getFieldDecorator,
-        id,
         label,
         layout,
+        style,
+        value,
+
+        addType,
+        disabled,
+        format,
+        id,
         onChange,
         placeholder,
         rules,
-        style,
         showTime,
-        value,
     } = props;
+
+    const { getFieldDecorator } = props.form;
 
     const defaultProps = {
         disabled,
@@ -63,22 +66,22 @@ const BaseDatePicker = (props) => {
 }
 
 BaseDatePicker.propTypes = {
-    addType: propTypes.string,
     className: propTypes.string,
-    disabled: propTypes.bool,
-    format: propTypes.string,
-    getFieldDecorator: propTypes.func.isRequired,
-    id: propTypes.string.isRequired,
     label: propTypes.string,
     layout: propTypes.object,
+    style: propTypes.object,
+
+    addType: propTypes.string,
+    disabled: propTypes.bool,
+    format: propTypes.string,
+    id: propTypes.string.isRequired,
     onChange: propTypes.func.isRequired,
     placeholder: propTypes.oneOfType([
         propTypes.string,
         propTypes.array,
     ]),
     rules: propTypes.array,
-    style: propTypes.object,
     showTime: propTypes.bool,
 };
 
-export default BaseDatePicker;
+export default Form.create()(BaseDatePicker);

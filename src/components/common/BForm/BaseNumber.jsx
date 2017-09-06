@@ -9,23 +9,26 @@ import { Form, InputNumber } from 'antd';
 const FormItem = Form.Item;
 
 const BaseNumber = (props) => {
+
     const {
         className,
-        disabled,
-        extra,
-        getFieldDecorator,
-        id,
         label,
         layout,
+        style,
+        value,
+
+        disabled,
+        extra,
+        id,
         min,
         max,
-        step,
         onChange,
         placeholder,
         rules,
-        style,
-        value,
+        step,
     } = props;
+
+    const { getFieldDecorator } = props.form;
 
     const defaultProps = {
         disabled,
@@ -58,19 +61,19 @@ const BaseNumber = (props) => {
 
 BaseNumber.propTypes = {
     className: propTypes.string,
-    disabled: propTypes.bool,
-    extra: propTypes.string,
-    getFieldDecorator: propTypes.func.isRequired,
-    id: propTypes.string.isRequired,
     label: propTypes.string,
     layout: propTypes.object,
+    style: propTypes.object,
+
+    disabled: propTypes.bool,
+    extra: propTypes.string,
+    id: propTypes.string.isRequired,
     min: propTypes.number,
     max: propTypes.number,
-    step: propTypes.number,
     onChange: propTypes.func.isRequired,
     placeholder: propTypes.string,
     rules: propTypes.array,
-    style: propTypes.object,
+    step: propTypes.number,
 };
 
-export default BaseNumber;
+export default Form.create()(BaseNumber);

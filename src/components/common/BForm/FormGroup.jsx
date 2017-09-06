@@ -13,6 +13,22 @@ class FormGroup extends Component {
         values: {},
     }
 
+    validateFields = () => {
+        const { configs } = this.props;
+        const ids = Object.keys(configs).map((v) => v);
+        let canSubmit = true;
+        ids.some((id) => {
+            const ref = this.refs[`FormBox_${id}`].refs[`BaseForm_${id}`];
+            ref.validateFields((errors, values) => {
+                if (errors) {
+                    canSubmit = false;
+                }
+            })
+            return canSubmit;
+        })
+        return canSubmit;
+    }
+
     render() {
         const { configs, onChange, values, formProps, col, className } = this.props;
 

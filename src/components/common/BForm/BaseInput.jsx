@@ -12,25 +12,27 @@ const RadioGroup = Radio.Group;
 const BaseInput = (props) => {
 
     const {
-        addType,
         className,
+        label,
+        layout,
+        style,
+        value,
+
+        addType,
         childGutter,
         childSpan,
         disabled,
         extra,
-        getFieldDecorator,
         id,
-        label,
-        layout,
         onChange,
         options,
         placeholder,
         rules,
-        style,
         toUpperCase,
         toLowerCase,
-        value,
     } = props;
+
+    const { getFieldDecorator } = props.form;
 
     const defaultProps = {
         disabled,
@@ -164,23 +166,23 @@ const BaseInput = (props) => {
 }
 
 BaseInput.propTypes = {
-    addType: propTypes.string,
     className: propTypes.string,
+    label: propTypes.string,
+    layout: propTypes.object,
+    style: propTypes.object,
+
+    addType: propTypes.string,
     childGutter: propTypes.number,
     childSpan: propTypes.object,
     disabled: propTypes.bool,
-    getFieldDecorator: propTypes.func.isRequired,
     extra: propTypes.string,
     id: propTypes.string.isRequired,
-    label: propTypes.string,
-    layout: propTypes.object,
     onChange: propTypes.func.isRequired,
     options: propTypes.array,
     placeholder: propTypes.string,
     rules: propTypes.array,
-    style: propTypes.object,
     toUpperCase: propTypes.bool,
     toLowerCase: propTypes.bool,
 };
 
-export default BaseInput;
+export default Form.create()(BaseInput);

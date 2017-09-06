@@ -48,22 +48,9 @@ class SurveryContent extends Component {
         })
     }
 
-    getFormIds = () => {
-        return Object.keys(CONFIG_USER_SURVERY).map((v) => v);
-    }
-
     onSubmit = () => {
-        const ids = this.getFormIds();
-        console.log(ids)
-        ids.forEach((id) => {
-            const ref = this.refs.formGroup_1.refs[`FormBox_${id}`];
-            ref.validateFields((errors, values) => {
-                if (errors) {
-                    console.log('errors>>>', errors)
-                }
-                console.log('values>>>', values)
-            })
-        })
+        const canSubmit = this.refs.formGroup_1.validateFields();
+        console.log('canSubmit>>>', canSubmit);
     }
 
     render() {

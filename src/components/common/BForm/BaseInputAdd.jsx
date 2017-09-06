@@ -8,26 +8,31 @@ const Option = Select.Option;
 const InputGroup = Input.Group;
 
 const BaseInputAdd = (props) => {
+
     const {
-        addType,
         className,
+        label,
+        layout,
+        style,
+        value,
+
+        addType,
         childGutter,
         childSpan,
         disabled,
         dropdownMatchSelectWidth,
         extra,
-        getFieldDecorator,
         id,
-        label,
-        layout,
         onChange,
         options,
         placeholder,
         rules,
         selectWidth,
-        style,
-        value,
+        toUpperCase,
+        toLowerCase,
     } = props;
+
+    const { getFieldDecorator } = props.form;
 
     const commonProps = {
         disabled,
@@ -91,23 +96,25 @@ const BaseInputAdd = (props) => {
 }
 
 BaseInputAdd.propTypes = {
-    addType: propTypes.string,
     className: propTypes.string,
+    label: propTypes.string,
+    layout: propTypes.object,
+    style: propTypes.object,
+
+    addType: propTypes.string,
     childGutter: propTypes.number,
     childSpan: propTypes.object,
     disabled: propTypes.bool,
     dropdownMatchSelectWidth: propTypes.bool,
     extra: propTypes.string,
-    getFieldDecorator: propTypes.func.isRequired,
     id: propTypes.string.isRequired,
-    label: propTypes.string,
-    layout: propTypes.object,
     onChange: propTypes.func.isRequired,
     options: propTypes.array.isRequired,
     placeholder: propTypes.string,
     rules: propTypes.array,
     selectWidth: propTypes.number,
-    style: propTypes.object,
+    toUpperCase: propTypes.bool,
+    toLowerCase: propTypes.bool,
 };
 
-export default BaseInputAdd;
+export default Form.create()(BaseInputAdd);

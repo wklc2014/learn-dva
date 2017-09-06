@@ -10,23 +10,23 @@ import { Form, Cascader } from 'antd';
 const FormItem = Form.Item;
 
 const BaseCascader = (props) => {
-    console.log('BaseCascader render');
-
     const {
-        allowClear,
         className,
-        disabled,
-        getFieldDecorator,
-        id,
         label,
         layout,
+        style,
+        value,
+
+        allowClear,
+        disabled,
+        id,
         onChange,
         options,
         placeholder,
         rules,
-        style,
-        value,
     } = props;
+
+    const { getFieldDecorator } = props.form;
 
     const defaultProps = {
         disabled,
@@ -56,18 +56,18 @@ const BaseCascader = (props) => {
 }
 
 BaseCascader.propTypes = {
-    allowClear: propTypes.bool,
     className: propTypes.string,
-    disabled: propTypes.bool,
-    getFieldDecorator: propTypes.func.isRequired,
-    id: propTypes.string.isRequired,
     label: propTypes.string,
     layout: propTypes.object,
+    style: propTypes.object,
+
+    allowClear: propTypes.bool,
+    disabled: propTypes.bool,
+    id: propTypes.string.isRequired,
     onChange: propTypes.func.isRequired,
     options: propTypes.array.isRequired,
     placeholder: propTypes.string,
     rules: propTypes.array,
-    style: propTypes.object,
 };
 
-export default BaseCascader;
+export default Form.create()(BaseCascader);

@@ -10,19 +10,22 @@ const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 
 const BaseCheckbox = (props) => {
+
     const {
         className,
-        disabled,
-        getFieldDecorator,
-        id,
         label,
         layout,
+        style,
+        value,
+
+        disabled,
+        id,
         onChange,
         options,
         rules,
-        style,
-        value,
     } = props;
+
+    const { getFieldDecorator } = props.form;
 
     const defaultProps = {
         disabled,
@@ -51,15 +54,15 @@ const BaseCheckbox = (props) => {
 
 BaseCheckbox.propTypes = {
     className: propTypes.string,
-    disabled: propTypes.bool,
-    getFieldDecorator: propTypes.func.isRequired,
-    id: propTypes.string.isRequired,
     label: propTypes.string,
     layout: propTypes.object,
+    style: propTypes.object,
+
+    disabled: propTypes.bool,
+    id: propTypes.string.isRequired,
     onChange: propTypes.func.isRequired,
     options: propTypes.array.isRequired,
     rules: propTypes.array,
-    style: propTypes.object,
 };
 
-export default BaseCheckbox;
+export default Form.create()(BaseCheckbox);
