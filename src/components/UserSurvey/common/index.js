@@ -1,5 +1,5 @@
 // 用户调查字段配置
-export const CONFIG_USER_SURVERY = {
+export const USER_SURVERY = {
     lossPart: {
         order: 1,
         type: 'cascader',
@@ -129,7 +129,10 @@ export const CONFIG_USER_SURVERY = {
             { value: '07', label: '两、三轮摩托车号牌' },
             { value: '08', label: '轻便摩托车号牌' },
             { value: '09', label: '使馆摩托车号牌' },
-        ]
+        ],
+        rules: {
+            required: true,
+        }
     },
     carNoAddress: {
         order: 14,
@@ -164,3 +167,10 @@ export const CONFIG_USER_SURVERY = {
         extra: '最多输入500个字',
     }
 };
+
+export const EDITOR = {
+    uEditor: {
+        type: 'editor',
+        text: '内容',
+    }
+}

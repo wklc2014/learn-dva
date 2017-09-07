@@ -13,10 +13,11 @@ import formLayout from './formLayout/';
 import BaseCascader from './BaseCascader.jsx';
 import BaseCheckbox from './BaseCheckbox.jsx';
 import BaseDatePicker from './BaseDatePicker.jsx';
+import BaseEditor from './BaseEditor.jsx';
 import BaseInput from './BaseInput.jsx';
 import BaseInputAdd from './BaseInputAdd.jsx';
 import BaseNumber from './BaseNumber.jsx';
-import BaseRadio from './BaseRadio.jsx';
+import BaseRadio from './BaseRadio.jsx' ;
 import BaseSelect from './BaseSelect.jsx';
 import BaseText from './BaseText.jsx';
 import BaseTextArea from './BaseTextArea.jsx';
@@ -271,17 +272,6 @@ class FormBox extends Component {
             layout: newLayout,
             style: newStyle,
             value: newValue,
-
-            addType: this.props.addType,
-            childGutter: this.props.childGutter,
-            childSpan: newChildSpan,
-            disabled: this.props.disabled,
-            extra: this.props.extra,
-            id: this.props.id,
-            onChange: this.onChange,
-            options: newOption,
-            placeholder: newPlaceholder,
-            rules: newRules,
         }
 
         switch (this.props.type) {
@@ -290,6 +280,7 @@ class FormBox extends Component {
                     ...commonProps,
                     allowClear: this.props.allowClear,
                     disabled: this.props.disabled,
+                    extra: this.props.extra,
                     id: this.props.id,
                     onChange: this.onChange,
                     options: newOption,
@@ -363,6 +354,7 @@ class FormBox extends Component {
                     disabled: this.props.disabled,
                     id: this.props.id,
                     onChange: this.onChange,
+                    options: newOption,
                     rules: newRules,
                     step: this.props.step,
                 };
@@ -428,6 +420,25 @@ class FormBox extends Component {
                     toLowerCase: this.props.toLowerCase,
                 };
                 ChildEle = <BaseTextArea {...textareaProps} />;
+                break;
+            case 'editor':
+                const editorProps = {
+                    ...commonProps,
+                    addType: this.props.addType,
+                    childGutter: this.props.childGutter,
+                    childSpan: newChildSpan,
+                    disabled: this.props.disabled,
+                    extra: this.props.extra,
+                    id: this.props.id,
+                    onChange: this.onChange,
+                    options: newOption,
+                    placeholder: newPlaceholder,
+                    rows: this.props.rows,
+                    rules: newRules,
+                    toUpperCase: this.props.toUpperCase,
+                    toLowerCase: this.props.toLowerCase,
+                };
+                ChildEle = <BaseEditor {...editorProps} />;
                 break;
         }
 

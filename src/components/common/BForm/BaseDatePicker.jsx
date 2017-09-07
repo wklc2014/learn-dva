@@ -33,6 +33,9 @@ const BaseDatePicker = (props) => {
 
     const defaultProps = {
         disabled,
+        onChange(value) {
+            onChange({ id, value });
+        },
         placeholder,
         style,
         format,
@@ -56,6 +59,7 @@ const BaseDatePicker = (props) => {
         >
             {getFieldDecorator(id, {
                 rules,
+                initialValue: value,
             })(ChildEle)}
         </FormItem>
     );
@@ -80,16 +84,4 @@ BaseDatePicker.propTypes = {
     showTime: propTypes.bool,
 };
 
-export default Form.create({
-    onFieldsChange(props, fields) {
-        const id = Object.keys(fields)[0];
-        const { validating, value } = fields[id];
-        if (!validating) {
-            props.onChange({ id, value });
-        }
-    },
-    mapPropsToFields(props) {
-        const { id, value } = props;
-        return { [id]: { value } }
-    }
-})(BaseDatePicker);
+export default Form.create()(BaseDatePicker);

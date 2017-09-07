@@ -29,6 +29,9 @@ const BaseCheckbox = (props) => {
 
     const defaultProps = {
         disabled,
+        onChange: (value) => {
+            onChange({ id, value });
+        },
         options,
         style,
     };
@@ -43,6 +46,7 @@ const BaseCheckbox = (props) => {
         >
             {getFieldDecorator(id, {
                 rules,
+                initialValue: value,
             })(ChildEle)}
         </FormItem>
     );
@@ -61,16 +65,4 @@ BaseCheckbox.propTypes = {
     rules: propTypes.array,
 };
 
-export default Form.create({
-    onFieldsChange(props, fields) {
-        const id = Object.keys(fields)[0];
-        const { validating, value } = fields[id];
-        if (!validating) {
-            props.onChange({ id, value });
-        }
-    },
-    mapPropsToFields(props) {
-        const { id, value } = props;
-        return { [id]: { value } }
-    }
-})(BaseCheckbox);
+export default Form.create()(BaseCheckbox);

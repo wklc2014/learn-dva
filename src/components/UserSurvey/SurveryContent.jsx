@@ -5,7 +5,7 @@ import { connect } from 'dva';
 import React, { Component } from 'react';
 import { Button } from 'antd';
 
-import { CONFIG_USER_SURVERY } from './common/';
+import * as CONFIGS from './common/';
 import FormGroup from '../common/BForm/FormGroup.jsx';
 
 class SurveryContent extends Component {
@@ -57,7 +57,7 @@ class SurveryContent extends Component {
                 <div style={commonStyle}>
                     <FormGroup
                         ref="formGroup_1"
-                        configs={CONFIG_USER_SURVERY}
+                        configs={CONFIGS.EDITOR}
                         col={3}
                         onChange={this.onChange}
                         formProps={{

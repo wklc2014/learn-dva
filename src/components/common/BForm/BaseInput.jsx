@@ -36,6 +36,9 @@ const BaseInput = (props) => {
 
     const defaultProps = {
         disabled,
+        onChange: (e) => {
+            onChange({ id, value: e.target.value });
+        },
         placeholder,
         size: 'large',
         style,
@@ -55,13 +58,7 @@ const BaseInput = (props) => {
                     style.marginRight = '8px';
                 }
 
-                const btnProps = {
-                    key: i,
-                    type: v.type,
-                    size: 'large',
-                    style,
-                    disabled,
-                };
+                const btnProps = { key: i, type: v.type, size: 'large', style, disabled, };
 
                 if (v.value === 'city') {
                     return (
@@ -69,12 +66,7 @@ const BaseInput = (props) => {
                             key={i}
                             options={v.citys}
                             onChange={(value) => {
-                                onChange({
-                                    id,
-                                    value: v.value,
-                                    type: 'button',
-                                    addValue: value,
-                                });
+                                onChange({ id, value: v.value, type: 'button', addValue: value, });
                             }}
                         >
                             <Button {...btnProps}>{v.label}</Button>
@@ -86,11 +78,7 @@ const BaseInput = (props) => {
                     <Button
                         {...btnProps}
                         onClick={() => {
-                            onChange({
-                                id,
-                                value: v.value,
-                                type: 'button',
-                            });
+                            onChange({ id, value: v.value, type: 'button', });
                         }}
                     >
                         {v.label}
@@ -102,6 +90,7 @@ const BaseInput = (props) => {
                     <Col {...childSpanLeft}>
                         {getFieldDecorator(id, {
                             rules,
+                            initialValue: value,
                         })(inputEle)}
                     </Col>
                     <Col {...childSpanRight}>
@@ -111,18 +100,14 @@ const BaseInput = (props) => {
             );
             break;
         case 'radio':
-            const addValue = lodash.get(value, 'addValue', undefined);
             const inputValue = lodash.get(value, 'inputValue', undefined);
+            const addValue = lodash.get(value, 'addValue', undefined);
             const radioEle = (
                 <RadioGroup
                     disabled={disabled}
                     value={addValue}
                     onChange={(e) => {
-                        onChange({
-                            id,
-                            value: e.target.value,
-                            type: 'radio',
-                        });
+                        onChange({ id, value: e.target.value, type: 'radio', });
                     }}
                 >
                     {options.map((v, i) => <Radio key={i} value={v.value}>{v.label}</Radio>)}
@@ -133,6 +118,7 @@ const BaseInput = (props) => {
                     <Col {...childSpanLeft}>
                         {getFieldDecorator(id, {
                             rules,
+                            initialValue: inputValue,
                         })(inputEle)}
                     </Col>
                     <Col {...childSpanRight}>
@@ -144,6 +130,7 @@ const BaseInput = (props) => {
         default:
             ChildEle = getFieldDecorator(id, {
                 rules,
+                initialValue: value,
             })(inputEle);
     }
 
@@ -179,20 +166,4 @@ BaseInput.propTypes = {
     toLowerCase: propTypes.bool,
 };
 
-export default Form.create({
-    onFieldsChange(props, fields) {
-        const id = Object.keys(fields)[0];
-        const { validating, value } = fields[id];
-        if (!validating) {
-            props.onChange({ id, value });
-        }
-    },
-    mapPropsToFields(props) {
-        const { id, value, addType } = props;
-        let inputValue = value;
-        if (addType === 'radio') {
-            inputValue = value.inputValue;
-        }
-        return { [id]: { value: inputValue } }
-    }
-})(BaseInput);
+export default Form.create()(BaseInput);

@@ -19,6 +19,7 @@ const BaseCascader = (props) => {
 
         allowClear,
         disabled,
+        extra,
         id,
         onChange,
         options,
@@ -30,6 +31,9 @@ const BaseCascader = (props) => {
 
     const defaultProps = {
         disabled,
+        onChange: (value) => {
+            onChange({ id, value });
+        },
         placeholder,
         options,
         style,
@@ -43,9 +47,11 @@ const BaseCascader = (props) => {
             {...layout}
             label={label}
             className={className}
+            extra={extra}
         >
             {getFieldDecorator(id, {
                 rules,
+                initialValue: value,
             })(ChildEle)}
         </FormItem>
     );
@@ -66,16 +72,4 @@ BaseCascader.propTypes = {
     rules: propTypes.array,
 };
 
-export default Form.create({
-    onFieldsChange(props, fields) {
-        const id = Object.keys(fields)[0];
-        const { validating, value } = fields[id];
-        if (!validating) {
-            props.onChange({ id, value });
-        }
-    },
-    mapPropsToFields(props) {
-        const { id, value } = props;
-        return { [id]: { value } }
-    }
-})(BaseCascader);
+export default Form.create()(BaseCascader);
