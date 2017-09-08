@@ -8,12 +8,8 @@ import lodash from 'lodash';
 import { Form, Checkbox } from 'antd';
 import Simditor from "simditor";
 import $ from 'jquery';
-require("simditor/styles/simditor.css");
 
-const FormItem = Form.Item ;
-const CheckboxGroup = Checkbox.Group;
-
-const refID = 'textarea_uid';
+const FormItem = Form.Item;
 
 class BaseEditor extends Component {
 
@@ -22,8 +18,9 @@ class BaseEditor extends Component {
     }
 
     initEditor = () => {
-        let config = {
-            placeholder: this.props.placeholder,
+        const { placeholder, value, id } = this.props;
+        const config = {
+            placeholder,
             defaultImage: 'images/image.png',
             params: {},
             tabIndent: true,
@@ -42,22 +39,24 @@ class BaseEditor extends Component {
                 'outdent',
                 'alignment',
             ],
-
-
             toolbarFloat: true,
             toolbarFloatOffset: 0,
             toolbarHidden: false,
             pasteImage: false,
             cleanPaste: false,
-            textarea: $(this.refs[this.props.id])
+            textarea: $(`#${id}`)
         };
 
         this.editor = new Simditor(config);// 初始化编辑器
-        this.editor.setValue(this.props.value);
+        if (value) {
+            this.editor.setValue(value);
+        }
 
         //监听改变
         this.editor.on("valuechanged", (e, src) => {
-            this.props.onChange(this.getValue());
+            const id = this.props.id;
+            const value = this.getValue();
+            this.props.onChange({ id, value });
         });
 
         //更改图片上传类型
@@ -91,20 +90,10 @@ class BaseEditor extends Component {
 
         const defaultProps = {
             disabled,
-            onChange: (value) => {
-                onChange({ id, value });
-            },
-            options,
             style,
         };
 
-        const ChildEle = (
-            <textarea
-                id={`editor_${id}`}
-                ref={id}
-                placeholder="请输入内容"
-            />
-        )
+        const ChildEle = <textarea {...defaultProps} />;
 
         return (
             <FormItem
@@ -112,7 +101,7 @@ class BaseEditor extends Component {
                 label={label}
                 className={className}
             >
-                {getFieldDecorator(id, {
+                {getFieldDecorator(`${id}`, {
                     rules,
                 })(ChildEle)}
             </FormItem>
@@ -129,7 +118,6 @@ BaseEditor.propTypes = {
     disabled: propTypes.bool,
     id: propTypes.string.isRequired,
     onChange: propTypes.func.isRequired,
-    options: propTypes.array.isRequired,
     rules: propTypes.array,
 };
 

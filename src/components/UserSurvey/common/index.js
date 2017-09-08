@@ -1,14 +1,15 @@
 // 用户调查字段配置
 export const USER_SURVERY = {
-    lossPart: {
+    accidentCity: {
         order: 1,
         type: 'cascader',
-        label: '受伤部位',
+        label: '出险城市',
         area: 'quanguo',
         placeholder: '这是一个三级联动选择',
-        rules: {
+        rules: [{
             required: true,
-        }
+            message: '出险城市不能为空'
+        }]
     },
     payMoney: {
         order: 2,
@@ -41,11 +42,16 @@ export const USER_SURVERY = {
         type: 'input',
         label: '用户姓名',
         extra: '最多输入500个字',
-        rules: {
+        rules: [{
             required: true,
+            message: '用户姓名必填'
+        }, {
             max: 4,
+            message: '用户姓名最多4位'
+        }, {
             min: 2,
-        },
+            message: '用户姓名至少2位'
+        }],
         toLowerCase: true,
     },
     address: {
@@ -68,10 +74,11 @@ export const USER_SURVERY = {
             { label: '同标的', value: '01' },
             { label: '同三者', value: '02' },
         ],
-        rules: {
+        rules: [{
             required: true,
             whitespace: true,
-        }
+            message: '联系人电话必填'
+        }],
     },
     carNumber: {
         order: 8,
@@ -83,16 +90,22 @@ export const USER_SURVERY = {
         order: 9,
         type: 'input',
         label: '手机号码',
-        rules: {
+        rules: [{
             required: true,
-            len: 3,
-        }
+            message: '手机号码必填'
+        }, {
+            len: 11,
+            message: '手机号码必须为11位'
+        }],
     },
     ploicyMoney: {
         order: 10,
         type: 'number',
         label: '保单金额',
-        rules: { required: true }
+        rules: [{
+            required: true,
+            message: '保单金额必填'
+        }],
     },
     sex: {
         order: 11,
@@ -130,9 +143,10 @@ export const USER_SURVERY = {
             { value: '08', label: '轻便摩托车号牌' },
             { value: '09', label: '使馆摩托车号牌' },
         ],
-        rules: {
+        rules: [{
             required: true,
-        }
+            message: '号牌种类必填'
+        }],
     },
     carNoAddress: {
         order: 14,
@@ -151,7 +165,10 @@ export const USER_SURVERY = {
         type: 'textarea',
         label: '出险描述',
         colSpan: 2,
-        rules: { required: true },
+        rules: [{
+            required: true,
+            message: '出险描述必填'
+        }],
         extra: '最多输入500个字',
     },
     accidentCreate: {
@@ -165,12 +182,11 @@ export const USER_SURVERY = {
         ],
         childSpan: 18,
         extra: '最多输入500个字',
+    },
+    emailContent: {
+        order: 17,
+        type: 'editor',
+        label: '内容',
+        colSpan: 3,
     }
 };
-
-export const EDITOR = {
-    uEditor: {
-        type: 'editor',
-        text: '内容',
-    }
-}

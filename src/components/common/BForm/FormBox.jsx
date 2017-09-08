@@ -41,7 +41,7 @@ class FormBox extends Component {
         notFoundContent             : '没有数据',
         option                      : [],
         rows                        : 4,
-        rules                       : {},
+        rules                       : [],
         space                       : 20,
         showTime                    : true,
     }
@@ -71,20 +71,23 @@ class FormBox extends Component {
         const { value, option } = this.props;
         let newValues = this.beforeUpdateValue(value);
 
+        if (!this.props.defaultValue) {
+            return newValues;
+        }
+
         switch (this.props.type) {
             case 'checkbox':
                 if (!value && option) {
-                    const o = [];
+                    const arr = [];
                     option.forEach((v) => {
                         if (v.selected) {
-                            o.push(v.value);
+                            arr.push(v.value);
                         }
                     })
-                    newValues = o;
+                    newValues = arr;
                 }
                 break;
             case 'radio':
-            case 'enum':
                 if (!value && option) {
                     option.some((v) => {
                         if (v.selected) {
@@ -94,21 +97,14 @@ class FormBox extends Component {
                     })
                 }
                 break;
-            case 'input':
-                if (this.props.addType === 'radio') {
-                    let inputValue = '';
-                    let addValue = '';
-                    if (!value || (value && typeof value === 'string')) {
-                        inputValue = value;
-                    } else {
-                        inputValue = value.inputValue;
-                        addValue = value.addValue;
-                    }
-                    newValues = { inputValue, addValue };
-                }
+            case 'enum':
+
                 break;
+            case 'input':
             case 'inputAdd':
-                if (this.props.addType === 'before-select') {
+                const { addType } = this.props;
+                const targetType = ['radio', 'before-select'];
+                if (targetType.indexOf(this.props.addType) !== -1) {
                     let inputValue = '';
                     let addValue = '';
                     if (!value || (value && typeof value === 'string')) {
@@ -174,42 +170,6 @@ class FormBox extends Component {
         return newClassName;
     }
 
-    getNewRules = () => {
-        const { rules, label, id, value } = this.props;
-        const newRules = [];
-
-        if (rules.required) {
-            const requiredRule = {
-                required: true,
-                message: `${label || id}必填`,
-            };
-            if (rules.whitespace !== undefined) {
-                requiredRule.whitespace = !!rules.whitespace;
-            }
-            newRules.push(requiredRule);
-        }
-        if (rules.max) {
-            newRules.push({
-                max: rules.max,
-                message: `${label || id}最多输入${rules.max}位`,
-            });
-        }
-        if (rules.min) {
-            newRules.push({
-                min: rules.min,
-                message: `${label || id}最少输入${rules.min}位`,
-            });
-        }
-        if (rules.len) {
-            newRules.push({
-                len: rules.len,
-                message: `${label || id}长度必须为${rules.len}位`,
-            });
-        }
-
-        return newRules;
-    }
-
     getNewLayout = () => {
         const { layout, colSpan } = this.props;
         const L = formLayout[layout] || {};
@@ -222,13 +182,13 @@ class FormBox extends Component {
         let newOption = option || [];
         switch (this.props.type) {
             case 'cascader':
-                const T = {
+                const CITYS = {
                     quanguo: CHINESE_CITYS,
                     shanghai: CHINESE_SHANGHAI,
                     beijing: CHINESE_BEIJING,
                 };
-                if (this.props.area && T[this.props.area]) {
-                    newOption = [...T[this.props.area]];
+                if (this.props.area && CITYS[this.props.area]) {
+                    newOption = [...CITYS[this.props.area]];
                 }
         }
         return newOption;
@@ -247,6 +207,7 @@ class FormBox extends Component {
             case 'number':
             case 'enum':
             case 'inputAdd':
+            case 'editor':
                 Object.assign(newStyle, { width: '100%' });
                 break;
         }
@@ -255,7 +216,6 @@ class FormBox extends Component {
 
     render() {
         const newPlaceholder = this.getNewPlaceholder();
-        const newRules = this.getNewRules();
         const newLayout = this.getNewLayout();
         const newValue = this.getNewValue();
         const newClassName = this.getNewClassName();
@@ -266,7 +226,7 @@ class FormBox extends Component {
         let ChildEle = null;
 
         const commonProps = {
-            ref: `BaseForm_${this.props.id}`,
+            wrappedComponentRef: (inst) => this.formRef = inst,
             className: newClassName,
             label: this.props.label,
             layout: newLayout,
@@ -285,7 +245,7 @@ class FormBox extends Component {
                     onChange: this.onChange,
                     options: newOption,
                     placeholder: newPlaceholder,
-                    rules: newRules,
+                    rules: this.props.rules,
                 };
                 ChildEle = <BaseCascader {...cascaderProps} />;
                 break;
@@ -296,7 +256,7 @@ class FormBox extends Component {
                     id: this.props.id,
                     onChange: this.onChange,
                     options: newOption,
-                    rules: newRules,
+                    rules: this.props.rules,
                 };
                 ChildEle = <BaseCheckbox {...checkboxProps} />;
                 break;
@@ -309,7 +269,7 @@ class FormBox extends Component {
                     id: this.props.id,
                     onChange: this.onChange,
                     placeholder: newPlaceholder,
-                    rules: newRules,
+                    rules: this.props.rules,
                     showTime: this.props.showTime,
                 };
                 ChildEle = <BaseDatePicker {...dateProps} />;
@@ -326,7 +286,7 @@ class FormBox extends Component {
                     onChange: this.onChange,
                     options: newOption,
                     placeholder: newPlaceholder,
-                    rules: newRules,
+                    rules: this.props.rules,
                     toUpperCase: this.props.toUpperCase,
                     toLowerCase: this.props.toLowerCase,
                 }
@@ -342,7 +302,7 @@ class FormBox extends Component {
                     max: this.props.max,
                     onChange: this.onChange,
                     placeholder: newPlaceholder,
-                    rules: newRules,
+                    rules: this.props.rules,
                     step: this.props.step,
                 };
                 ChildEle = <BaseNumber {...numberProps} />;
@@ -355,7 +315,7 @@ class FormBox extends Component {
                     id: this.props.id,
                     onChange: this.onChange,
                     options: newOption,
-                    rules: newRules,
+                    rules: this.props.rules,
                     step: this.props.step,
                 };
                 ChildEle = <BaseRadio {...radioProps} />;
@@ -372,7 +332,7 @@ class FormBox extends Component {
                     onChange: this.onChange,
                     options: newOption,
                     placeholder: newPlaceholder,
-                    rules: newRules,
+                    rules: this.props.rules,
                 };
                 ChildEle = <BaseSelect {...enumProps} />;
                 break;
@@ -389,7 +349,7 @@ class FormBox extends Component {
                     onChange: this.onChange,
                     options: newOption,
                     placeholder: newPlaceholder,
-                    rules: newRules,
+                    rules: this.props.rules,
                     selectWidth: this.props.selectWidth,
                     toUpperCase: this.props.toUpperCase,
                     toLowerCase: this.props.toLowerCase,
@@ -415,7 +375,7 @@ class FormBox extends Component {
                     options: newOption,
                     placeholder: newPlaceholder,
                     rows: this.props.rows,
-                    rules: newRules,
+                    rules: this.props.rules,
                     toUpperCase: this.props.toUpperCase,
                     toLowerCase: this.props.toLowerCase,
                 };
@@ -424,19 +384,13 @@ class FormBox extends Component {
             case 'editor':
                 const editorProps = {
                     ...commonProps,
-                    addType: this.props.addType,
-                    childGutter: this.props.childGutter,
-                    childSpan: newChildSpan,
                     disabled: this.props.disabled,
                     extra: this.props.extra,
                     id: this.props.id,
                     onChange: this.onChange,
-                    options: newOption,
                     placeholder: newPlaceholder,
                     rows: this.props.rows,
-                    rules: newRules,
-                    toUpperCase: this.props.toUpperCase,
-                    toLowerCase: this.props.toLowerCase,
+                    rules: this.props.rules,
                 };
                 ChildEle = <BaseEditor {...editorProps} />;
                 break;
@@ -457,7 +411,7 @@ FormBox.propTypes = {
     option: propTypes.array,
     placeholder: propTypes.string,
     rows: propTypes.number,
-    rules: propTypes.object,
+    rules: propTypes.array,
     space: propTypes.number,
 };
 

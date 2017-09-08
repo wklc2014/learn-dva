@@ -13,20 +13,70 @@ class FormGroup extends Component {
         values: {},
     }
 
-    validateFields = () => {
+    getInstance = (id) => {
+        const inst = this.refs[`FormBox_${id}`].formRef;
+        return inst;
+    }
+
+    getConfigsIDs = () => {
         const { configs } = this.props;
-        const ids = Object.keys(configs).map((v) => v);
+        return Object.keys(configs).map((v) => v);
+    }
+
+    validateFields = () => {
+        const ids = this.getConfigsIDs();
         let canSubmit = true;
-        console.log('ids>>>', ids)
         ids.forEach((id) => {
-            const ref = this.refs[`FormBox_${id}`].refs[`BaseForm_${id}`];
-            ref.validateFields((errors, values) => {
+            const instance = this.getInstance(id);
+            instance.props.form.validateFields((errors, values) => {
                 if (errors && canSubmit) {
                     canSubmit = false;
                 }
             })
-        })
+        });
         return canSubmit;
+    }
+
+    setFieldsValue = (fields = {}) => {
+        const ids = this.getConfigsIDs();
+        Object.keys(fields).forEach((id) => {
+            if (ids.indexOf(id) !== -1) {
+                const instance = this.getInstance(id);
+                instance.props.form.setFieldsValue({ [id]: fields[id] });
+            }
+        });
+    }
+
+    getFieldValue = (id = '') => {
+        const ids = this.getConfigsIDs();
+        const fieldValue = {};
+        if (ids.indexOf(id) !== -1) {
+            const instance = this.getInstance(id);
+            fieldValue[id] = instance.props.form.getFieldValue(id);
+        }
+        return fieldValue;
+    }
+
+    getFieldsValue = (fields = []) => {
+        const ids = this.getConfigsIDs();
+        const fieldsValue = {};
+        if (!fields || !fields.length) {
+            fields = [...ids];
+        }
+        fields.forEach((id) => Object.assign(fieldsValue, this.getFieldValue(id)));
+        return fieldsValue;
+    }
+
+    resetFields = (fields = []) => {
+        const ids = this.getConfigsIDs();
+        let resetStatus = true;
+        Object.keys(fields).forEach((id) => {
+            if (ids.indexOf(id) !== -1) {
+                const instance = this.getInstance(id);
+                resetStatus = instance.props.form.resetFields();
+            }
+        });
+        return resetStatus;
     }
 
     render() {
@@ -47,7 +97,6 @@ class FormGroup extends Component {
                 const groupProps = {
                     ...val,
                     ...formProps,
-                    // form: this.props.form,
                     onChange,
                     key: i,
                     id: v,
@@ -55,7 +104,14 @@ class FormGroup extends Component {
                     ref: `FormBox_${v}`,
                 };
                 const newColProps = getGridLayout(col, val.colSpan);
-                return <Col key={`formGroup_${i}`} {...newColProps}><FormBox {...groupProps} /></Col>;
+                return (
+                    <Col
+                        key={`FormBox_${i}`}
+                        {...newColProps}
+                    >
+                        <FormBox {...groupProps} />
+                    </Col>
+                );
             });
 
         return <Form className={className}><Row type="flex">{formEle}</Row></Form>;
@@ -71,5 +127,4 @@ FormGroup.propTypes = {
     className: propTypes.string,
 };
 
-// export default Form.create()(FormGroup);
 export default FormGroup;

@@ -39,6 +39,8 @@ const BaseTextArea = (props) => {
         disabled,
     }
 
+    console.log('BaseTextArea>>>', value)
+
     const defaultProps = {
         ...commonProps,
         placeholder,
