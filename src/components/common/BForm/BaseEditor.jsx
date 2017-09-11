@@ -8,6 +8,7 @@ import lodash from 'lodash';
 import { Form, Checkbox } from 'antd';
 import Simditor from "simditor";
 import $ from 'jquery';
+import getBaseEditorDom from './utils/getBaseEditorDom.js';
 
 const FormItem = Form.Item;
 
@@ -44,16 +45,16 @@ class BaseEditor extends Component {
             toolbarHidden: false,
             pasteImage: false,
             cleanPaste: false,
-            textarea: $(`#${id}`)
+            textarea: $(`#${id}`),
         };
 
-        this.editor = new Simditor(config);// 初始化编辑器
+        this.editor = new Simditor(config);
         if (value) {
             this.editor.setValue(value);
         }
 
         //监听改变
-        this.editor.on("valuechanged", (e, src) => {
+        this.editor.on('valuechanged', (e, src) => {
             const id = this.props.id;
             const value = this.getValue();
             this.props.onChange({ id, value });
@@ -64,10 +65,9 @@ class BaseEditor extends Component {
     };
 
     getValue = () => {
-        // return this.editor.getValue().trim();
-        let selectName = `#${this.props.id} .simditor`;
-        let html = $(selectName).find(".simditor-body").html();
-        console.log(html);
+        const { id } = this.props;
+        const { body } = getBaseEditorDom(id);
+        const html = body.html();
         return html;
     };
 
@@ -101,9 +101,11 @@ class BaseEditor extends Component {
                 label={label}
                 className={className}
             >
-                {getFieldDecorator(`${id}`, {
-                    rules,
-                })(ChildEle)}
+                <div id={`FormItem_${id}_Wraper`}>
+                    {getFieldDecorator(`${id}`, {
+                        rules,
+                    })(ChildEle)}
+                </div>
             </FormItem>
         );
     }

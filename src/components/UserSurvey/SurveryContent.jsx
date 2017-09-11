@@ -52,7 +52,6 @@ class SurveryContent extends Component {
     onGetValue = () => {
         const ref = this.getRef();
         const values = ref.getFieldsValue();
-        // const values = ref.getFieldValue('accidentCreate');
         console.log('values>>>', values);
     }
 

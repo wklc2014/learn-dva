@@ -81,7 +81,10 @@ BaseDatePicker.propTypes = {
         propTypes.array,
     ]),
     rules: propTypes.array,
-    showTime: propTypes.bool,
+    showTime: propTypes.oneOfType([
+        propTypes.bool,
+        propTypes.object,
+    ]),
 };
 
 export default Form.create()(BaseDatePicker);

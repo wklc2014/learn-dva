@@ -5,7 +5,8 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { Form, Row, Col } from 'antd';
 import FormBox from './FormBox.jsx';
-import { getGridLayout } from './utils/';
+import getGridLayout from './utils/getGridLayout.js';
+import getBaseEditorDom from './utils/getBaseEditorDom.js';
 
 class FormGroup extends Component {
 
@@ -21,6 +22,14 @@ class FormGroup extends Component {
     getConfigsIDs = () => {
         const { configs } = this.props;
         return Object.keys(configs).map((v) => v);
+    }
+
+    getFieldType = (id) => {
+        const { configs } = this.props;
+        if (!id) {
+            return null;
+        }
+        return configs[id].type;
     }
 
     validateFields = () => {
@@ -42,7 +51,9 @@ class FormGroup extends Component {
         Object.keys(fields).forEach((id) => {
             if (ids.indexOf(id) !== -1) {
                 const instance = this.getInstance(id);
-                instance.props.form.setFieldsValue({ [id]: fields[id] });
+                if (this.getFieldType(id) !== 'editor') {
+                    instance.props.form.setFieldsValue({ [id]: fields[id] });
+                }
             }
         });
     }
@@ -52,7 +63,14 @@ class FormGroup extends Component {
         const fieldValue = {};
         if (ids.indexOf(id) !== -1) {
             const instance = this.getInstance(id);
-            fieldValue[id] = instance.props.form.getFieldValue(id);
+            let value;
+            if (this.getFieldType(id) === 'editor') {
+                const { body } = getBaseEditorDom(id);
+                value = body.html();
+            } else {
+                value = instance.props.form.getFieldValue(id);
+            }
+            fieldValue[id] = value;
         }
         return fieldValue;
     }
@@ -69,14 +87,21 @@ class FormGroup extends Component {
 
     resetFields = (fields = []) => {
         const ids = this.getConfigsIDs();
-        let resetStatus = true;
-        Object.keys(fields).forEach((id) => {
+        if (!fields || !fields.length) {
+            fields = [...ids];
+        }
+        fields.forEach((id) => {
             if (ids.indexOf(id) !== -1) {
                 const instance = this.getInstance(id);
-                resetStatus = instance.props.form.resetFields();
+                if (this.getFieldType(id) === 'editor') {
+                    const { body, placeholder } = getBaseEditorDom(id);
+                    body.html('');
+                    placeholder.css('display', 'block');
+                } else {
+                    instance.props.form.resetFields();
+                }
             }
         });
-        return resetStatus;
     }
 
     render() {

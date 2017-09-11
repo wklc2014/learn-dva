@@ -22,9 +22,9 @@ import BaseSelect from './BaseSelect.jsx';
 import BaseText from './BaseText.jsx';
 import BaseTextArea from './BaseTextArea.jsx';
 
-import * as CONSTANTS from '../constants/';
-import { CHINESE_CITYS, CHINESE_SHANGHAI, CHINESE_BEIJING } from './utils/ChineseCities.js';
-import { getChildGridLayout } from './utils/';
+import * as CITYS from './utils/ChineseCities.js';
+import * as UTILS from './utils/';
+import getChildGridLayout from './utils/getChildGridLayout.js';
 
 class FormBox extends Component {
 
@@ -34,7 +34,7 @@ class FormBox extends Component {
         childGutter                 : 16,
         disabled                    : false,
         dropdownMatchSelectWidth    : false,
-        format                      : CONSTANTS.FORMAT_DATE_STRING,
+        format                      : UTILS.FORMAT_DATE_STRING,
         join                        : '-',
         layout                      : 'A',
         mode                        : '',
@@ -43,7 +43,7 @@ class FormBox extends Component {
         rows                        : 4,
         rules                       : [],
         space                       : 20,
-        showTime                    : true,
+        showTime                    : UTILS.TIME_PICKER_OPTION,
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -182,13 +182,13 @@ class FormBox extends Component {
         let newOption = option || [];
         switch (this.props.type) {
             case 'cascader':
-                const CITYS = {
-                    quanguo: CHINESE_CITYS,
-                    shanghai: CHINESE_SHANGHAI,
-                    beijing: CHINESE_BEIJING,
+                const citys = {
+                    quanguo: CITYS.CHINESE_CITYS,
+                    shanghai: CITYS.CHINESE_SHANGHAI,
+                    beijing: CITYS.CHINESE_BEIJING,
                 };
-                if (this.props.area && CITYS[this.props.area]) {
-                    newOption = [...CITYS[this.props.area]];
+                if (this.props.area && citys[this.props.area]) {
+                    newOption = [...citys[this.props.area]];
                 }
         }
         return newOption;

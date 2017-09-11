@@ -1,37 +1,24 @@
-import gridLayout from '../gridLayout/';
-
-export function getGridLayout(col, colSpan) {
-    if (col < 1 || col > 5) {
-        console.log('getGridLayout col only 1 to 4');
-        return {};
-    }
-    const newCols = gridLayout[`col_${col}`];
-    const newColProps = newCols[`colSpan_${colSpan}`] || newCols.normal;
-
-    return newColProps;
-}
-
-export function getChildGridLayout(childSpan) {
-    const span = childSpan || 12;
-
-    const leftProps = {
-        xs: 24,
-        sm: span,
-        md: span,
-        lg: span,
-        xl: span,
-        style: {
-            marginBottom: '8px',
+export const TIME_PICKER_OPTION = {
+    disabledMinutes: () => {
+        const result = [];
+        for(let i = 0; i < 60; i++) {
+            if (i % 5) {
+                result.push(i);
+            }
         }
-    };
-
-    const rightProps = {
-        xs: 24,
-        sm: 24 - span,
-        md: 24 - span,
-        lg: 24 - span,
-        xl: 24 - span,
-    };
-
-    return { left: leftProps, right: rightProps };
+        return result;
+    },
+    hideDisabledOptions: true,
+    disabledSeconds: () => {
+        const result = [];
+        for(let i = 0; i < 60; i++) {
+            if (i % 5) {
+                result.push(i);
+            }
+        }
+        return result;
+    },
+    disabled: true
 }
+
+export const DATE_PICKER_OPTIONS_FORMAT = 'YYYY-MM-DD HH:mm:ss';
