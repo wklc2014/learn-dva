@@ -32,6 +32,7 @@ class FormBox extends Component {
         allowClear: true,
         childSpan: 9,
         childGutter: 16,
+        defaultValue: true,
         disabled: false,
         disabledTime:  UTILS.DATE_PICKER_OPTIONS.disabledTime,
         dropdownMatchSelectWidth: false,
@@ -40,7 +41,7 @@ class FormBox extends Component {
         layout: 'A',
         mode: '',
         notFoundContent: '没有数据',
-        option: [],
+        options: [],
         rows: 4,
         rules: [],
         space: 20,
@@ -69,18 +70,17 @@ class FormBox extends Component {
     }
 
     getNewValue = () => {
-        const { value, option } = this.props;
+        const { value, options } = this.props;
         let newValues = this.beforeUpdateValue(value);
-
-        if (!this.props.defaultValue) {
+        if (!this.props.defaultValue && this.props.type !== 'text') {
             return newValues;
         }
 
         switch (this.props.type) {
             case 'checkbox':
-                if (!value && option) {
+                if (!value && options) {
                     const arr = [];
-                    option.forEach((v) => {
+                    options.forEach((v) => {
                         if (v.selected) {
                             arr.push(v.value);
                         }
@@ -89,8 +89,8 @@ class FormBox extends Component {
                 }
                 break;
             case 'radio':
-                if (!value && option) {
-                    option.some((v) => {
+                if (!value && options) {
+                    options.some((v) => {
                         if (v.selected) {
                             newValues = v.value;
                         }
@@ -127,13 +127,13 @@ class FormBox extends Component {
                 }  else if (lodash.isArray(value)) {
                     // 数组
                     newValues = value.join(this.props.join);
-                } else if (option){
+                } else if (options){
                     // 枚举值映射
-                    option.some((v) => {
+                    options.some((v) => {
                         if (v.value === value) {
                             newValues = v.label;
                         }
-                        return v.value === props.value;
+                        return v.value === this.props.value;
                     })
                 }
                 break;
@@ -178,9 +178,9 @@ class FormBox extends Component {
         return newLayout;
     }
 
-    getNewOption = () => {
-        const { option, type } = this.props;
-        let newOption = option || [];
+    getNewOptions = () => {
+        const { options, type } = this.props;
+        let newOptions = options || [];
         switch (this.props.type) {
             case 'cascader':
                 const citys = {
@@ -192,7 +192,7 @@ class FormBox extends Component {
                     newOption = [...citys[this.props.area]];
                 }
         }
-        return newOption;
+        return newOptions;
     }
 
     getNewStyle = () => {
@@ -220,7 +220,7 @@ class FormBox extends Component {
         const newLayout = this.getNewLayout();
         const newValue = this.getNewValue();
         const newClassName = this.getNewClassName();
-        const newOption = this.getNewOption();
+        const newOptions = this.getNewOptions();
         const newStyle = this.getNewStyle();
         const newChildSpan = getChildGridLayout(this.props.childSpan);
 
@@ -244,7 +244,7 @@ class FormBox extends Component {
                     extra: this.props.extra,
                     id: this.props.id,
                     onChange: this.onChange,
-                    options: newOption,
+                    options: newOptions,
                     placeholder: newPlaceholder,
                     rules: this.props.rules,
                 };
@@ -256,7 +256,7 @@ class FormBox extends Component {
                     disabled: this.props.disabled,
                     id: this.props.id,
                     onChange: this.onChange,
-                    options: newOption,
+                    options: newOptions,
                     rules: this.props.rules,
                 };
                 ChildEle = <BaseCheckbox {...checkboxProps} />;
@@ -286,7 +286,7 @@ class FormBox extends Component {
                     extra: this.props.extra,
                     id: this.props.id,
                     onChange: this.onChange,
-                    options: newOption,
+                    options: newOptions,
                     placeholder: newPlaceholder,
                     rules: this.props.rules,
                     toUpperCase: this.props.toUpperCase,
@@ -316,7 +316,7 @@ class FormBox extends Component {
                     disabled: this.props.disabled,
                     id: this.props.id,
                     onChange: this.onChange,
-                    options: newOption,
+                    options: newOptions,
                     rules: this.props.rules,
                     step: this.props.step,
                 };
@@ -332,7 +332,7 @@ class FormBox extends Component {
                     id: this.props.id,
                     mode: this.props.mode,
                     onChange: this.onChange,
-                    options: newOption,
+                    options: newOptions,
                     placeholder: newPlaceholder,
                     rules: this.props.rules,
                 };
@@ -349,7 +349,7 @@ class FormBox extends Component {
                     extra: this.props.extra,
                     id: this.props.id,
                     onChange: this.onChange,
-                    options: newOption,
+                    options: newOptions,
                     placeholder: newPlaceholder,
                     rules: this.props.rules,
                     selectWidth: this.props.selectWidth,
@@ -374,7 +374,7 @@ class FormBox extends Component {
                     extra: this.props.extra,
                     id: this.props.id,
                     onChange: this.onChange,
-                    options: newOption,
+                    options: newOptions,
                     placeholder: newPlaceholder,
                     rows: this.props.rows,
                     rules: this.props.rules,

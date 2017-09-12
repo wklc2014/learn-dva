@@ -15,7 +15,7 @@ export const USER_SURVERY = {
         order: 2,
         type: 'checkbox',
         label: '赔付金额',
-        option: [
+        options: [
             { label: '无损', value: '01' },
             { label: '正前方', value: '02', selected: true },
             { label: '前方左侧', value: '03' },
@@ -60,7 +60,7 @@ export const USER_SURVERY = {
         addType: 'button',
         label: '地址',
         childSpan: 10,
-        option: [
+        options: [
             { label: '同标的', value: '01' },
             { label: '同三者', value: '02' },
         ]
@@ -70,7 +70,7 @@ export const USER_SURVERY = {
         type: 'input',
         addType: 'radio',
         label: '联系人电话',
-        option: [
+        options: [
             { label: '同标的', value: '01' },
             { label: '同三者', value: '02' },
         ],
@@ -111,7 +111,7 @@ export const USER_SURVERY = {
         order: 11,
         type: 'radio',
         label: '被保人性别',
-        option: [
+        options: [
             { label: '男', value: '01' },
             { label: '女', value: '02', selected: true },
             { label: '男女', value: '03' },
@@ -123,7 +123,7 @@ export const USER_SURVERY = {
         type: 'radio',
         addType: 'button',
         label: '类别',
-        option: [
+        options: [
             { label: '车险', value: '01', selected: true },
             { label: '非车险', value: '02' },
         ]
@@ -132,7 +132,7 @@ export const USER_SURVERY = {
         order: 13,
         type: 'enum',
         label: '号牌种类',
-        option: [
+        options: [
             { value: '01', label: '大型汽车号牌' },
             { value: '02', label: '小型汽车号牌' },
             { value: '03', label: '使馆汽车号牌' },
@@ -153,7 +153,7 @@ export const USER_SURVERY = {
         type: 'inputAdd',
         addType: 'before-select',
         label: '号牌归属地',
-        option: [
+        options: [
             { value: '01', label: '+86' },
             { value: '02', label: '+87', selected: true },
             { value: '03', label: '+88' },
@@ -177,7 +177,7 @@ export const USER_SURVERY = {
         addType: 'button',
         label: '生成描述',
         colSpan: 3,
-        option: [
+        options: [
             { value: '01', label: '生成描述', type: 'primary' },
         ],
         childSpan: 18,
