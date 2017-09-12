@@ -34,16 +34,22 @@ class FormGroup extends Component {
 
     validateFields = () => {
         const ids = this.getConfigsIDs();
-        let canSubmit = true;
+        const ret = {
+            canSubmit: true,
+            errors: {},
+            values: {},
+        };
         ids.forEach((id) => {
             const instance = this.getInstance(id);
             instance.props.form.validateFields((errors, values) => {
-                if (errors && canSubmit) {
-                    canSubmit = false;
+                if (errors && ret.canSubmit) {
+                    ret.canSubmit = false;
                 }
+                Object.assign(ret.errors, errors);
+                Object.assign(ret.values, values);
             })
         });
-        return canSubmit;
+        return ret;
     }
 
     setFieldsValue = (fields = {}) => {

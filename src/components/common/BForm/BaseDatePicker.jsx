@@ -21,6 +21,7 @@ const BaseDatePicker = (props) => {
 
         addType,
         disabled,
+        disabledTime,
         format,
         id,
         onChange,
@@ -33,6 +34,7 @@ const BaseDatePicker = (props) => {
 
     const defaultProps = {
         disabled,
+        disabledTime,
         onChange(value) {
             onChange({ id, value });
         },
@@ -73,6 +75,7 @@ BaseDatePicker.propTypes = {
 
     addType: propTypes.string,
     disabled: propTypes.bool,
+    disabledTime: propTypes.func,
     format: propTypes.string,
     id: propTypes.string.isRequired,
     onChange: propTypes.func.isRequired,

@@ -57,15 +57,14 @@ class SurveryContent extends Component {
 
     onSubmit = () => {
         const ref = this.getRef();
-        const canSubmit = ref.validateFields();
-        console.log('canSubmit>>>', canSubmit);
+        const ret = ref.validateFields();
+        console.log('ret>>>', ret);
     }
 
     onReset = () => {
         const ref = this.getRef();
         this.props.dispatch({ type: 'UserSurvery/reset' });
-        const ret = ref.resetFields();
-        console.log('ret>>>', ret);
+        ref.resetFields();
     }
 
     render() {

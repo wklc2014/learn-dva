@@ -71,6 +71,28 @@ class BaseEditor extends Component {
         return html;
     };
 
+    getRules = () => {
+        const { rules, value } = this.props;
+        const newRules = {};
+        if (!rules) {
+            return newRules;
+        }
+        rules.some((v) => {
+            if (v.required) {
+                newRules.required = true;
+                if (value === '<p><br></p>') {
+                    newRules.help = v.message;
+                    newRules.validateStatus = 'error';
+                } else {
+                    newRules.help = '';
+                    newRules.validateStatus = 'success';
+                }
+            }
+            return v.required;
+        });
+        return newRules;
+    }
+
     render() {
         const {
             className,
@@ -86,25 +108,24 @@ class BaseEditor extends Component {
             rules,
         } = this.props;
 
-        const { getFieldDecorator } = this.props.form;
-
         const defaultProps = {
             disabled,
+            id,
             style,
         };
 
         const ChildEle = <textarea {...defaultProps} />;
+        const newRules = this.getRules();
 
         return (
             <FormItem
                 {...layout}
                 label={label}
                 className={className}
+                {...newRules}
             >
                 <div id={`FormItem_${id}_Wraper`}>
-                    {getFieldDecorator(`${id}`, {
-                        rules,
-                    })(ChildEle)}
+                    {ChildEle}
                 </div>
             </FormItem>
         );
@@ -123,4 +144,4 @@ BaseEditor.propTypes = {
     rules: propTypes.array,
 };
 
-export default Form.create()(BaseEditor);
+export default BaseEditor;
