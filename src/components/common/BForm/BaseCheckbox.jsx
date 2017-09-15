@@ -12,17 +12,18 @@ const CheckboxGroup = Checkbox.Group;
 const BaseCheckbox = (props) => {
 
     const {
-        className,
-        label,
-        layout,
-        style,
+        id,
+        rules,
         value,
 
+        layout,
+        label,
+        className,
+
         disabled,
-        id,
         onChange,
         options,
-        rules,
+        style,
     } = props;
 
     const { getFieldDecorator } = props.form;
@@ -53,16 +54,21 @@ const BaseCheckbox = (props) => {
 }
 
 BaseCheckbox.propTypes = {
+    id: propTypes.string.isRequired,
+    rules: propTypes.array,
+
+    label: propTypes.oneOfType([
+        propTypes.element,
+        propTypes.string,
+        propTypes.node,
+    ]),
     className: propTypes.string,
     label: propTypes.string,
-    layout: propTypes.object,
-    style: propTypes.object,
 
     disabled: propTypes.bool,
-    id: propTypes.string.isRequired,
     onChange: propTypes.func.isRequired,
     options: propTypes.array.isRequired,
-    rules: propTypes.array,
+    style: propTypes.object,
 };
 
 export default Form.create()(BaseCheckbox);

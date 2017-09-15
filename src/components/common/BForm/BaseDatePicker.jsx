@@ -13,21 +13,23 @@ const { RangePicker } = DatePicker;
 const BaseDatePicker = (props) => {
 
     const {
-        className,
+        id,
+        rules,
+        value,
+        addType,
+
         label,
         layout,
-        style,
-        value,
+        className,
+        extra,
 
-        addType,
         disabled,
         disabledTime,
         format,
-        id,
         onChange,
         placeholder,
-        rules,
         showTime,
+        style,
     } = props;
 
     const { getFieldDecorator } = props.form;
@@ -35,13 +37,13 @@ const BaseDatePicker = (props) => {
     const defaultProps = {
         disabled,
         disabledTime,
+        format,
         onChange(value) {
             onChange({ id, value });
         },
         placeholder,
-        style,
-        format,
         showTime,
+        style,
     };
 
     let ChildEle = null;
@@ -58,6 +60,7 @@ const BaseDatePicker = (props) => {
             {...layout}
             label={label}
             className={className}
+            extra={extra}
         >
             {getFieldDecorator(id, {
                 rules,
@@ -68,26 +71,32 @@ const BaseDatePicker = (props) => {
 }
 
 BaseDatePicker.propTypes = {
-    className: propTypes.string,
-    label: propTypes.string,
-    layout: propTypes.object,
-    style: propTypes.object,
-
+    id: propTypes.string.isRequired,
+    rules: propTypes.array,
     addType: propTypes.string,
+
+    label: propTypes.oneOfType([
+        propTypes.element,
+        propTypes.string,
+        propTypes.node,
+    ]),
+    layout: propTypes.object,
+    className: propTypes.string,
+    extra: propTypes.string,
+
     disabled: propTypes.bool,
     disabledTime: propTypes.func,
     format: propTypes.string,
-    id: propTypes.string.isRequired,
     onChange: propTypes.func.isRequired,
     placeholder: propTypes.oneOfType([
         propTypes.string,
         propTypes.array,
     ]),
-    rules: propTypes.array,
     showTime: propTypes.oneOfType([
         propTypes.bool,
         propTypes.object,
     ]),
+    style: propTypes.object,
 };
 
 export default Form.create()(BaseDatePicker);

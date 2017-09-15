@@ -1,43 +1,46 @@
 /**
  * 级联选择
- * 增加【北京】【上海】【全国】城市选择
+ * 可自定义级联选择项
+ * 内置了【北京】【上海】【全国】的城市选择
  */
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-import lodash from 'lodash';
 import { Form, Cascader } from 'antd';
 
 const FormItem = Form.Item;
 
 const BaseCascader = (props) => {
     const {
-        className,
-        label,
-        layout,
-        style,
+        id,
+        rules,
         value,
+
+        layout,
+        label,
+        className,
+        extra,
 
         allowClear,
         disabled,
-        extra,
-        id,
         onChange,
         options,
         placeholder,
-        rules,
+        showSearch,
+        style,
     } = props;
 
     const { getFieldDecorator } = props.form;
 
     const defaultProps = {
+        allowClear,
         disabled,
         onChange: (value) => {
             onChange({ id, value });
         },
-        placeholder,
         options,
+        placeholder,
+        showSearch,
         style,
-        allowClear,
     };
 
     const ChildEle = <Cascader {...defaultProps} />;
@@ -58,18 +61,25 @@ const BaseCascader = (props) => {
 }
 
 BaseCascader.propTypes = {
-    className: propTypes.string,
-    label: propTypes.string,
+    id: propTypes.string.isRequired,
+    rules: propTypes.array,
+
+    label: propTypes.oneOfType([
+        propTypes.element,
+        propTypes.string,
+        propTypes.node,
+    ]),
     layout: propTypes.object,
-    style: propTypes.object,
+    className: propTypes.string,
+    extra: propTypes.string,
 
     allowClear: propTypes.bool,
     disabled: propTypes.bool,
-    id: propTypes.string.isRequired,
     onChange: propTypes.func.isRequired,
     options: propTypes.array.isRequired,
     placeholder: propTypes.string,
-    rules: propTypes.array,
+    showSearch: propTypes.string,
+    style: propTypes.object,
 };
 
 export default Form.create()(BaseCascader);

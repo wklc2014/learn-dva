@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import lodash from 'lodash';
 import moment from 'moment';
-import { Form, Table, Button } from 'antd';
+import { Form, DatePicker } from 'antd';
 import FormBox from '../common/BForm/FormBox.jsx';
 
 class Policy extends Component {
@@ -18,9 +18,22 @@ class Policy extends Component {
 
     render() {
 
+        const showTime = {
+            hideDisabledOptions: true,
+            defaultValue: moment('00:00:00', 'HH:mm:ss')
+        }
+
+        const disabledTime = function (_, ty) {
+            // body...
+        }
+
         return (
             <section>
-                123
+                <DatePicker
+                    format="YYYY-MM-DD HH:mm:ss"
+                    disabledTime={disabledTime}
+                    showTime={showTime}
+                />
             </section>
         );
     }

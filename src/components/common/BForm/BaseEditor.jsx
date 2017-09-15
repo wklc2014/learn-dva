@@ -1,5 +1,5 @@
 /**
- * 复选框
+ * 富文本编辑器
  */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -8,7 +8,6 @@ import lodash from 'lodash';
 import { Form, Checkbox } from 'antd';
 import Simditor from "simditor";
 import $ from 'jquery';
-import getBaseEditorDom from './utils/getBaseEditorDom.js';
 
 const FormItem = Form.Item;
 
@@ -143,5 +142,20 @@ BaseEditor.propTypes = {
     onChange: propTypes.func.isRequired,
     rules: propTypes.array,
 };
+
+function _getJqDom(id) {
+    const $wraper = $(`#FormItem_${id}_Wraper .simditor`);
+    return {
+        body: $wraper.find(".simditor-body"),
+        placeholder: $wraper.find(".simditor-placeholder"),
+    };
+}
+
+function _getJqDomPlaceholder(id) {
+    return _getJqDom(id).placeholder;
+}
+function _getJqDomBody(id) {
+    return _getJqDom(id).body;
+}
 
 export default BaseEditor;

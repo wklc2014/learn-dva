@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-/mobile/node_modules
 
 # production
 /dist
