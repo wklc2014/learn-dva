@@ -12,43 +12,42 @@ const Option = Select.Option;
 const BaseSelect = (props) => {
 
     const {
+        id,
+        rules,
+        value,
+        options,
+
         className,
+        extra,
         label,
         layout,
-        style,
-        value,
 
         allowClear,
         disabled,
         dropdownMatchSelectWidth,
-        extra,
-        id,
         mode,
         onChange,
-        options,
         placeholder,
-        rules,
+        style,
     } = props;
 
     const { getFieldDecorator } = props.form;
 
     const defaultProps = {
+        allowClear,
         disabled,
-        placeholder,
+        dropdownMatchSelectWidth,
+        mode,
         onChange: (value) => {
             onChange({ id, value });
         },
+        placeholder,
         style,
-        dropdownMatchSelectWidth,
-        allowClear,
-        mode,
     };
 
     const ChildEle = (
         <Select {...defaultProps}>
-            {options.map((v, i) => {
-                return <Option key={i} value={v.value}>{v.label}</Option>;
-            })}
+            {options.map((v, i) => <Option key={i} value={v.value}>{v.label}</Option>)}
         </Select>
     );
 
@@ -57,6 +56,7 @@ const BaseSelect = (props) => {
             {...layout}
             label={label}
             className={className}
+            extra={extra}
         >
             {getFieldDecorator(id, {
                 rules,
@@ -67,21 +67,22 @@ const BaseSelect = (props) => {
 }
 
 BaseSelect.propTypes = {
+    id: propTypes.string.isRequired,
+    rules: propTypes.array,
+    options: propTypes.array,
+
     className: propTypes.string,
+    extra: propTypes.string,
     label: propTypes.string,
     layout: propTypes.object,
-    style: propTypes.object,
 
     allowClear: propTypes.bool,
     disabled: propTypes.bool,
     dropdownMatchSelectWidth: propTypes.bool,
-    extra: propTypes.string,
-    id: propTypes.string.isRequired,
     mode: propTypes.string,
     onChange: propTypes.func.isRequired,
-    options: propTypes.array,
     placeholder: propTypes.string,
-    rules: propTypes.array,
+    style: propTypes.object,
 };
 
 export default Form.create()(BaseSelect);

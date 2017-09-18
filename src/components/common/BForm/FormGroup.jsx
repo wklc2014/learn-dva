@@ -6,7 +6,7 @@ import propTypes from 'prop-types';
 import { Form, Row, Col } from 'antd';
 import FormBox from './FormBox.jsx';
 import getGridLayout from './utils/getGridLayout.js';
-import getBaseEditorDom from './utils/getBaseEditorDom.js';
+import { getEditorBody, getEditorPlaceholder } from './utils/getEditorDom.js';
 
 class FormGroup extends Component {
 
@@ -15,7 +15,12 @@ class FormGroup extends Component {
     }
 
     getInstance = (id) => {
-        const inst = this.refs[`FormBox_${id}`].formRef;
+        const refBox = this.refs[`FormBox_${id}`]
+        const inst = refBox.formRef;
+        const ref = refBox.refs[`BaseForm_${id}`];
+        if (this.getFieldType(id) === 'editor') {
+            return ref;
+        }
         return inst;
     }
 
@@ -41,13 +46,25 @@ class FormGroup extends Component {
         };
         ids.forEach((id) => {
             const instance = this.getInstance(id);
-            instance.props.form.validateFields((errors, values) => {
-                if (errors && ret.canSubmit) {
-                    ret.canSubmit = false;
-                }
-                Object.assign(ret.errors, errors);
-                Object.assign(ret.values, values);
-            })
+            if (this.getFieldType(id) !== 'editor') {
+                instance.props.form.validateFields((errors, values) => {
+                    if (errors && ret.canSubmit) {
+                        ret.canSubmit = false;
+                    }
+                    Object.assign(ret.errors, errors);
+                    Object.assign(ret.values, values);
+                })
+            } else {
+                // instance.setState({
+                //     hasChanged: true
+                // }, () => {
+                //     const value = instance.getRules();
+                //     console.log('editor>>>', value)
+                // });
+                const validateRet = instance.validateFields();
+                Object.assign(ret.errors, validateRet.errors);
+                Object.assign(ret.values, validateRet.values);
+            }
         });
         return ret;
     }
@@ -57,7 +74,9 @@ class FormGroup extends Component {
         Object.keys(fields).forEach((id) => {
             if (ids.indexOf(id) !== -1) {
                 const instance = this.getInstance(id);
-                if (this.getFieldType(id) !== 'editor') {
+                if (this.getFieldType(id) === 'editor') {
+                    instance.setValue(fields[id]);
+                } else {
                     instance.props.form.setFieldsValue({ [id]: fields[id] });
                 }
             }
@@ -67,12 +86,14 @@ class FormGroup extends Component {
     getFieldValue = (id = '') => {
         const ids = this.getConfigsIDs();
         const fieldValue = {};
-        if (ids.indexOf(id) !== -1) {
+        if (id && ids.indexOf(id) !== -1) {
             const instance = this.getInstance(id);
             let value;
             if (this.getFieldType(id) === 'editor') {
-                const { body } = getBaseEditorDom(id);
-                value = body.html();
+                value = instance.getValue();
+                if (value === instance.EMPTY_VALUE) {
+                    value = '';
+                }
             } else {
                 value = instance.props.form.getFieldValue(id);
             }
@@ -100,9 +121,8 @@ class FormGroup extends Component {
             if (ids.indexOf(id) !== -1) {
                 const instance = this.getInstance(id);
                 if (this.getFieldType(id) === 'editor') {
-                    const { body, placeholder } = getBaseEditorDom(id);
-                    body.html('');
-                    placeholder.css('display', 'block');
+                    instance.editor.setValue(this.props.values[id] || '');
+                    instance.resetFields(false);
                 } else {
                     instance.props.form.resetFields();
                 }

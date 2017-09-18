@@ -41,3 +41,34 @@ function range(params = {}) {
     result = result.filter((v, i) => filter.indexOf(v) === -1);
     return result;
 }
+
+/**
+ * BaseEditor
+ */
+export const EDITOR_OPTIONS = {
+    config: {
+        defaultImage: 'images/image.png',
+        params: {},
+        tabIndent: true,
+        toolbar:[
+            'title',
+            'bold',
+            'italic',
+            'underline',
+            'strikethrough',
+            'fontScale',
+            'color',
+            'link',
+            'hr',
+            'image',
+            'indent',
+            'outdent',
+            'alignment',
+        ],
+        toolbarFloat: true,
+        toolbarFloatOffset: 0,
+        toolbarHidden: false,
+        pasteImage: false,
+        cleanPaste: false,
+    }
+}

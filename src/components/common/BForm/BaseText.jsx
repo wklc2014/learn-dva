@@ -11,11 +11,13 @@ const FormItem = Form.Item;
 
 const BaseText = (props) => {
     const {
+        value,
+
         className,
         label,
         layout,
+
         style,
-        value,
     } = props;
 
     const defaultProps = {
@@ -40,6 +42,7 @@ BaseText.propTypes = {
     className: propTypes.string,
     label: propTypes.string,
     layout: propTypes.object,
+
     style: propTypes.object,
 };
 

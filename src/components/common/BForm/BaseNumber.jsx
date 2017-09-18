@@ -11,35 +11,36 @@ const FormItem = Form.Item;
 const BaseNumber = (props) => {
 
     const {
-        className,
-        label,
-        layout,
-        style,
+        id,
+        rules,
         value,
 
-        disabled,
+        className,
         extra,
-        id,
+        label,
+        layout,
+
+        disabled,
         min,
         max,
         onChange,
         placeholder,
-        rules,
         step,
+        style,
     } = props;
 
     const { getFieldDecorator } = props.form;
 
     const defaultProps = {
         disabled,
-        placeholder,
+        min,
+        max,
         onChange: (value) => {
             props.onChange({ id, value });
         },
-        style,
-        min,
-        max,
+        placeholder,
         step,
+        style,
     };
 
     const ChildEle = <InputNumber {...defaultProps} />;
@@ -60,20 +61,25 @@ const BaseNumber = (props) => {
 }
 
 BaseNumber.propTypes = {
+    id: propTypes.string.isRequired,
+    rules: propTypes.array,
+
     className: propTypes.string,
-    label: propTypes.string,
+    extra: propTypes.string,
+    label: propTypes.oneOfType([
+        propTypes.element,
+        propTypes.string,
+        propTypes.node,
+    ]),
     layout: propTypes.object,
-    style: propTypes.object,
 
     disabled: propTypes.bool,
-    extra: propTypes.string,
-    id: propTypes.string.isRequired,
     min: propTypes.number,
     max: propTypes.number,
     onChange: propTypes.func.isRequired,
     placeholder: propTypes.string,
-    rules: propTypes.array,
     step: propTypes.number,
+    style: propTypes.object,
 };
 
 export default Form.create()(BaseNumber);

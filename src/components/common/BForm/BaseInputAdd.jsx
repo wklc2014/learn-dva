@@ -10,36 +10,33 @@ const InputGroup = Input.Group;
 const BaseInputAdd = (props) => {
 
     const {
-        className,
-        label,
-        layout,
-        style,
+        id,
+        rules,
         value,
-
         addType,
         childGutter,
         childSpan,
-        disabled,
-        dropdownMatchSelectWidth,
+
+        className,
         extra,
-        id,
+        label,
+        layout,
+
+        disabled,
         onChange,
-        options,
         placeholder,
-        rules,
+        style,
+
+        /* before-select */
+        dropdownMatchSelectWidth,
+        options,
         selectWidth,
-        toUpperCase,
-        toLowerCase,
     } = props;
 
     const { getFieldDecorator } = props.form;
 
-    const commonProps = {
-        disabled,
-    };
-
     const defaultProps = {
-        ...commonProps,
+        disabled,
         placeholder,
         style,
     };
@@ -49,21 +46,22 @@ const BaseInputAdd = (props) => {
     switch (addType) {
         case 'before-select':
             const selectOptionEle = options.map((v, i) => {
-                if (v.selected && !addValue) {
+                if (v.selected && addValue === undefined) {
                     addValue = v.value;
                 }
                 return <Option key={i} value={v.value}>{v.label}</Option>;
             });
             const addonBeforeProps = {
-                ...commonProps,
-                style: { width: selectWidth },
-                value: addValue,
+                disabled,
+                dropdownMatchSelectWidth,
                 onChange: (e) => {
                     onChange({
                         id,
                         value: { inputValue, addValue: e },
                     });
                 },
+                style: { width: selectWidth },
+                value: addValue,
             };
             const addonBeforeEle = <Select {...addonBeforeProps}>{selectOptionEle}</Select>;
             Object.assign(defaultProps, { addonBefore: addonBeforeEle });
@@ -72,12 +70,12 @@ const BaseInputAdd = (props) => {
     const ChildEle = (
         <Input
             {...defaultProps}
-             onChange={(e) => {
+            onChange={(e) => {
                 onChange({
                     id,
                     value: { inputValue: e.target.value, addValue },
                 });
-             }}
+            }}
         />
     );
 
@@ -86,6 +84,7 @@ const BaseInputAdd = (props) => {
             {...layout}
             label={label}
             className={className}
+            extra={extra}
         >
             {getFieldDecorator(id, {
                 rules,
@@ -96,25 +95,25 @@ const BaseInputAdd = (props) => {
 }
 
 BaseInputAdd.propTypes = {
-    className: propTypes.string,
-    label: propTypes.string,
-    layout: propTypes.object,
-    style: propTypes.object,
-
+    id: propTypes.string.isRequired,
+    rules: propTypes.array,
     addType: propTypes.string,
     childGutter: propTypes.number,
     childSpan: propTypes.object,
-    disabled: propTypes.bool,
-    dropdownMatchSelectWidth: propTypes.bool,
+
+    className: propTypes.string,
     extra: propTypes.string,
-    id: propTypes.string.isRequired,
+    label: propTypes.string,
+    layout: propTypes.object,
+
+    disabled: propTypes.bool,
     onChange: propTypes.func.isRequired,
-    options: propTypes.array.isRequired,
     placeholder: propTypes.string,
-    rules: propTypes.array,
+    style: propTypes.object,
+
+    dropdownMatchSelectWidth: propTypes.bool,
+    options: propTypes.array.isRequired,
     selectWidth: propTypes.number,
-    toUpperCase: propTypes.bool,
-    toLowerCase: propTypes.bool,
 };
 
 export default Form.create()(BaseInputAdd);

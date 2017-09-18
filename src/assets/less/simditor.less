@@ -143,11 +143,18 @@
   content: '\f01e';
 }
 
+.simditor-has-error {
+  .simditor{
+    border-color: #f04134 !important;
+  }
+}
+
 .simditor {
   position: relative;
   border: 1px solid #d9d9d9;
+  transition: all .3s;
   &.focus {
-    border: 1px solid #53bb9a;
+    border-color: #53bb9a;
   }
 }
 .simditor .simditor-wrapper {

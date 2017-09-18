@@ -18,10 +18,10 @@ const BaseDatePicker = (props) => {
         value,
         addType,
 
-        label,
-        layout,
         className,
         extra,
+        label,
+        layout,
 
         disabled,
         disabledTime,
@@ -75,14 +75,14 @@ BaseDatePicker.propTypes = {
     rules: propTypes.array,
     addType: propTypes.string,
 
+    className: propTypes.string,
+    extra: propTypes.string,
     label: propTypes.oneOfType([
         propTypes.element,
         propTypes.string,
         propTypes.node,
     ]),
     layout: propTypes.object,
-    className: propTypes.string,
-    extra: propTypes.string,
 
     disabled: propTypes.bool,
     disabledTime: propTypes.func,

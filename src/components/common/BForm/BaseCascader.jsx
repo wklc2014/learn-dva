@@ -15,10 +15,10 @@ const BaseCascader = (props) => {
         rules,
         value,
 
-        layout,
-        label,
         className,
         extra,
+        label,
+        layout,
 
         allowClear,
         disabled,
@@ -64,14 +64,14 @@ BaseCascader.propTypes = {
     id: propTypes.string.isRequired,
     rules: propTypes.array,
 
+    className: propTypes.string,
+    extra: propTypes.string,
     label: propTypes.oneOfType([
         propTypes.element,
         propTypes.string,
         propTypes.node,
     ]),
     layout: propTypes.object,
-    className: propTypes.string,
-    extra: propTypes.string,
 
     allowClear: propTypes.bool,
     disabled: propTypes.bool,

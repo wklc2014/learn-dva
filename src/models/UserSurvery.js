@@ -17,7 +17,7 @@ export default {
             ],
             address: '天府软件园D4',
             contactPhone: '',
-            emailContent: '<p>123</p>'
+            // emailContent: '<p>123</p>'
         },
     },
 

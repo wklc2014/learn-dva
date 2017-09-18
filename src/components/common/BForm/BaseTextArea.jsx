@@ -12,47 +12,45 @@ const { TextArea } = Input;
 const BaseTextArea = (props) => {
 
     const {
-        className,
-        label,
-        style,
-        layout,
+        id,
+        rules,
         value,
-
         addType,
         childGutter,
         childSpan,
-        disabled,
-        extra,
-        id,
-        onChange,
         options,
+
+        className,
+        extra,
+        label,
+        layout,
+
+        disabled,
+        onChange,
         placeholder,
         rows,
-        rules,
-        toUpperCase,
-        toLowerCase,
+        style,
     } = props;
 
     const { getFieldDecorator } = props.form;
 
-    const commonProps = {
-        disabled,
-    }
-
     const defaultProps = {
-        ...commonProps,
-        placeholder,
+        disabled,
         onChange: (e) => {
             onChange({ id, value: e.target.value });
         },
-        style,
+        placeholder,
         rows,
+        style,
     };
 
     const childSpanLeft = lodash.get(childSpan, 'left', {});
     const childSpanRight = lodash.get(childSpan, 'right', {});
     const inputEle = <TextArea {...defaultProps} />;
-    let ChildEle = null
+    let ChildEle = getFieldDecorator(id, {
+        rules,
+        initialValue: value,
+    })(inputEle);
     switch (addType) {
         case 'button':
             const btnEle = options.map((v, i) => {
@@ -63,16 +61,12 @@ const BaseTextArea = (props) => {
 
                 return (
                     <Button
-                        {...commonProps}
+                        disabled={disabled}
                         key={i}
                         type={v.type}
                         style={style}
                         onClick={(e) => {
-                            onChange({
-                                id,
-                                value: v.value,
-                                type: 'button',
-                            });
+                            onChange({ id, value: v.value, type: 'button' });
                         }}
                     >
                         {v.label}
@@ -81,23 +75,11 @@ const BaseTextArea = (props) => {
             });
             ChildEle = (
                 <Row type="flex" gutter={childGutter}>
-                    <Col {...childSpanLeft}>
-                        {getFieldDecorator(id, {
-                            rules,
-                            initialValue: value,
-                        })(inputEle)}
-                    </Col>
-                    <Col {...childSpanRight}>
-                        {btnEle}
-                    </Col>
+                    <Col {...childSpanLeft}>{ChildEle}</Col>
+                    <Col {...childSpanRight}>{btnEle}</Col>
                 </Row>
             );
             break;
-        default:
-            ChildEle = getFieldDecorator(id, {
-                rules,
-                initialValue: value,
-            })(inputEle);
     }
 
     return (
@@ -113,24 +95,23 @@ const BaseTextArea = (props) => {
 }
 
 BaseTextArea.propTypes = {
-    className: propTypes.string,
-    label: propTypes.string,
-    layout: propTypes.object,
-    style: propTypes.object,
-
+    id: propTypes.string.isRequired,
+    rules: propTypes.array,
     addType: propTypes.string,
     childGutter: propTypes.number,
     childSpan: propTypes.object,
-    disabled: propTypes.bool,
-    extra: propTypes.string,
-    id: propTypes.string.isRequired,
-    onChange: propTypes.func.isRequired,
     options: propTypes.array,
+
+    className: propTypes.string,
+    extra: propTypes.string,
+    label: propTypes.string,
+    layout: propTypes.object,
+
+    disabled: propTypes.bool,
+    onChange: propTypes.func.isRequired,
     placeholder: propTypes.string,
     rows: propTypes.number,
-    rules: propTypes.array,
-    toUpperCase: propTypes.bool,
-    toLowerCase: propTypes.bool,
+    style: propTypes.object,
 };
 
 export default Form.create()(BaseTextArea);

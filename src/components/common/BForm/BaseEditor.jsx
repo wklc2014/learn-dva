@@ -1,17 +1,30 @@
 /**
  * 富文本编辑器
  */
+import Simditor from "simditor";
+import $ from 'jquery';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import propTypes from 'prop-types';
 import lodash from 'lodash';
+import classnames from 'classnames';
 import { Form, Checkbox } from 'antd';
-import Simditor from "simditor";
-import $ from 'jquery';
+import { getEditorBody } from './utils/getEditorDom.js';
 
 const FormItem = Form.Item;
 
 class BaseEditor extends Component {
+
+    static defaultProps = {}
+
+    constructor(props) {
+        super(props);
+        this.EMPTY_VALUE = '<p><br></p>';
+        this.HAS_CHANGED = false;
+        this.state = {
+            hasChanged: false
+        }
+    }
 
     componentDidMount() {
          this.initEditor();
@@ -19,59 +32,38 @@ class BaseEditor extends Component {
 
     initEditor = () => {
         const { placeholder, value, id } = this.props;
-        const config = {
+        // const { hasChanged } = this.state;
+        this.editor = new Simditor({
+            ...this.props.init,
             placeholder,
-            defaultImage: 'images/image.png',
-            params: {},
-            tabIndent: true,
-            toolbar: [
-                'title',
-                'bold',
-                'italic',
-                'underline',
-                'strikethrough',
-                'fontScale',
-                'color',
-                'link',
-                'hr',
-                'image',
-                'indent',
-                'outdent',
-                'alignment',
-            ],
-            toolbarFloat: true,
-            toolbarFloatOffset: 0,
-            toolbarHidden: false,
-            pasteImage: false,
-            cleanPaste: false,
             textarea: $(`#${id}`),
-        };
-
-        this.editor = new Simditor(config);
+        });
         if (value) {
             this.editor.setValue(value);
         }
 
         //监听改变
         this.editor.on('valuechanged', (e, src) => {
-            const id = this.props.id;
+            if (!this.HAS_CHANGED) {
+                // this.setState({ hasChanged: true });
+                this.HAS_CHANGED = true;
+            }
             const value = this.getValue();
             this.props.onChange({ id, value });
         });
 
-        //更改图片上传类型
-        $(".simditor input[type='file']").attr('accept', 'image/jpg,image/jpeg,image/png,image/bmp');
-    };
+    }
 
     getValue = () => {
         const { id } = this.props;
-        const { body } = getBaseEditorDom(id);
+        const body = getEditorBody(id);
         const html = body.html();
         return html;
-    };
+    }
 
     getRules = () => {
         const { rules, value } = this.props;
+        // const { hasChanged } = this.state;
         const newRules = {};
         if (!rules) {
             return newRules;
@@ -79,7 +71,7 @@ class BaseEditor extends Component {
         rules.some((v) => {
             if (v.required) {
                 newRules.required = true;
-                if (value === '<p><br></p>') {
+                if (this.HAS_CHANGED && (!value || value === this.EMPTY_VALUE)) {
                     newRules.help = v.message;
                     newRules.validateStatus = 'error';
                 } else {
@@ -90,6 +82,28 @@ class BaseEditor extends Component {
             return v.required;
         });
         return newRules;
+    }
+
+    validateFields = () => {
+        this.resetFields(true);
+        const { id } = this.props;
+        const newRules = this.getRules();
+        const newValues = this.getValue();
+        const newErrors = {};
+        if (newRules.validateStatus === 'error') {
+            newErrors[id] = {
+                errors: [{
+                    field: id,
+                    message: newRules.help
+                }]
+            }
+        }
+        return { errors: newErrors, values: { [id]: newValues } };
+    }
+
+    resetFields = (status) => {
+        this.HAS_CHANGED = status;
+        this.forceUpdate();
     }
 
     render() {
@@ -116,6 +130,10 @@ class BaseEditor extends Component {
         const ChildEle = <textarea {...defaultProps} />;
         const newRules = this.getRules();
 
+        const wraperClassName = classnames({
+            'simditor-has-error': newRules.validateStatus === 'error'
+        })
+
         return (
             <FormItem
                 {...layout}
@@ -123,7 +141,7 @@ class BaseEditor extends Component {
                 className={className}
                 {...newRules}
             >
-                <div id={`FormItem_${id}_Wraper`}>
+                <div id={`FormItem_${id}_Wraper`} className={wraperClassName}>
                     {ChildEle}
                 </div>
             </FormItem>
@@ -142,20 +160,5 @@ BaseEditor.propTypes = {
     onChange: propTypes.func.isRequired,
     rules: propTypes.array,
 };
-
-function _getJqDom(id) {
-    const $wraper = $(`#FormItem_${id}_Wraper .simditor`);
-    return {
-        body: $wraper.find(".simditor-body"),
-        placeholder: $wraper.find(".simditor-placeholder"),
-    };
-}
-
-function _getJqDomPlaceholder(id) {
-    return _getJqDom(id).placeholder;
-}
-function _getJqDomBody(id) {
-    return _getJqDom(id).body;
-}
 
 export default BaseEditor;

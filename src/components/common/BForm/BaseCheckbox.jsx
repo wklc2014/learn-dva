@@ -16,9 +16,9 @@ const BaseCheckbox = (props) => {
         rules,
         value,
 
-        layout,
-        label,
         className,
+        label,
+        layout,
 
         disabled,
         onChange,
@@ -57,12 +57,12 @@ BaseCheckbox.propTypes = {
     id: propTypes.string.isRequired,
     rules: propTypes.array,
 
+    className: propTypes.string,
     label: propTypes.oneOfType([
         propTypes.element,
         propTypes.string,
         propTypes.node,
     ]),
-    className: propTypes.string,
     label: propTypes.string,
 
     disabled: propTypes.bool,

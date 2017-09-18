@@ -188,9 +188,9 @@ export const USER_SURVERY = {
         type: 'editor',
         label: '内容',
         colSpan: 3,
-        // rules: [{
-        //     required: true,
-        //     message: '内容必填'
-        // }],
+        rules: [{
+            required: true,
+            message: '内容必填'
+        }],
     }
 };
